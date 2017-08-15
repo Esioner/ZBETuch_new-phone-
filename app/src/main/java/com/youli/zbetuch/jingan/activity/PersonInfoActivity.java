@@ -63,7 +63,7 @@ int i=0;
         MyFpAdapter adapter=new MyFpAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(adapter);
 
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 

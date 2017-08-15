@@ -155,6 +155,12 @@ public class PersonalInfoQueryResult extends BaseActivity {
             viewHolder.tv_birth_date.setText(birthDate);
             viewHolder.tv_type.setText(personalInfoBean.getType());
             viewHolder.tv_situation.setText(personalInfoBean.getCurrentSituation());
+
+            if(position%2==0){
+                convertView.setBackgroundResource(R.color.skyBlue);
+            }else if (position%2 != 0){
+                convertView.setBackgroundResource(R.color.white);
+            }
             return convertView;
         }
 
