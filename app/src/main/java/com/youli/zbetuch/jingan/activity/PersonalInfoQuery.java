@@ -127,7 +127,7 @@ public class PersonalInfoQuery extends BaseActivity implements View.OnClickListe
             @Override
             public void run() {
                 try {
-                    String regionUrl = MyOkHttpUtils.BaseUrl+"/Json/Get_Area.aspx?REGION=310100";
+                    String regionUrl = MyOkHttpUtils.BaseUrl + "/Json/Get_Area.aspx?REGION=310100";
                     String regionBody = MyOkHttpUtils.okHttpGet(regionUrl).body().string();
                     if (regionBody != null) {
                         regionInfoList = new Gson().fromJson(regionBody, new
@@ -170,7 +170,7 @@ public class PersonalInfoQuery extends BaseActivity implements View.OnClickListe
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String streetUrl = MyOkHttpUtils.BaseUrl+"/Json/Get_Area.aspx?STREET=" +
+                String streetUrl = MyOkHttpUtils.BaseUrl + "/Json/Get_Area.aspx?STREET=" +
                         regionId;
                 String streetBody;
                 try {
@@ -204,21 +204,27 @@ public class PersonalInfoQuery extends BaseActivity implements View.OnClickListe
         String streetId = null;
         if (streetList != null && streetList.size() > 2) {
             streetId = streetList.get(spinner_street.getSelectedItemPosition()).getId();
-            final String committeeUrl = MyOkHttpUtils.BaseUrl+"/Json/Get_Area.aspx?COMMITTEE=" +
+            final String committeeUrl = MyOkHttpUtils.BaseUrl + "/Json/Get_Area.aspx?COMMITTEE=" +
                     streetId;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        String committeeBody = MyOkHttpUtils.okHttpGet(committeeUrl).body().string();
+                        String committeeBody = MyOkHttpUtils.okHttpGet(committeeUrl).body()
+                                .string();
                         if (!committeeBody.equals("[]")) {
                             committeeInfoList = new ArrayList<CommitteeInfo>();
                             committeeInfoList = new Gson().fromJson(committeeBody, new
                                     TypeToken<List<CommitteeInfo>>() {}.getType());
+                            committeeNameList.clear();
                             for (CommitteeInfo committeeInfo : committeeInfoList) {
                                 committeeNameList.add(committeeInfo.getCommitteeName());
                             }
                             showSpinner(committeeNameList, spinner_neighborhood_committee);
+                        } else {
+                            Looper.prepare();
+                            Toast.makeText(mContext, "居委会列表为空", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -291,7 +297,7 @@ public class PersonalInfoQuery extends BaseActivity implements View.OnClickListe
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            String url = MyOkHttpUtils.BaseUrl+"/Json/Get_BASIC_INFORMATION" +
+                            String url = MyOkHttpUtils.BaseUrl + "/Json/Get_BASIC_INFORMATION" +
                                     ".aspx?sfz=" + id_card_num;
                             Response response = MyOkHttpUtils.okHttpGet(url);
                             try {
@@ -312,70 +318,94 @@ public class PersonalInfoQuery extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btn_condition_query:
-//                String etAgeFrom = et_age_from.getText().toString().trim();
-//                String etAgeTo = et_age_to.getText().toString().trim();
-//                int endAge = 0;
-//                int startAge = 0;
-//                if (!etAgeFrom.equals("") && !etAgeTo.equals("")) {
-//                    startAge = Integer.parseInt(etAgeFrom);
-//                    endAge = Integer.parseInt(etAgeTo);
-//                    if (startAge > endAge && endAge < 0 && startAge < 0) {
-//                        Toast.makeText(mContext, "你输入的年龄有误，请重新输入", Toast.LENGTH_SHORT).show();
-//                        et_age_from.setText("");
-//                        et_age_to.setText("");
-//                        return;
-//                    }
-//                }
-//                String regionName = spinner_country.getSelectedItem().toString().trim();
-//                int regionId = 0;
-//                for (RegionInfo regionInfo : regionInfoList) {
-//                    if (regionInfo.getName() == regionName) {
-//                        regionId = regionInfo.getRegionId();
-//                    }
-//                }
-//                String streetName = spinner_street.getSelectedItem().toString().trim();
-//                String streetId = null;
-//                for (StreetInfo streetInfo : streetList) {
-//                    if (streetInfo.getStreetName() == streetName) {
-//                        streetId = streetInfo.getId();
-//                    }
-//                }
-//                String committeeName = spinner_neighborhood_committee.getSelectedItem().toString
-//                        ().trim();
-//                int committeeId = 275;
-//                for (CommitteeInfo committeeInfo : committeeInfoList) {
-//                    if (committeeInfo.getCommitteeName() == committeeName) {
-//                        committeeId = committeeInfo.getId();
-//                    }
-//                }
-//                String sex = "";
-//                if (!spinner_sex.getSelectedItem().toString().trim().equals("全部")) {
-//                    sex = spinner_sex.getSelectedItem().toString().trim();
-//                }
-//                String mark = spinner_identifying.getSelectedItemPosition() == 0 ? "" :spinner_identifying.getSelectedItem().toString().trim();
-//                String type = spinner_status.getSelectedItemPosition() == 0 ? "" : spinner_status.getSelectedItem().toString().trim();
-//                String situation  = spinner_situation.getSelectedItemPosition() == 0 ? "":spinner_situation.getSelectedItem().toString().trim();
-//                String current_intent = spinner_current_intent.getSelectedItemPosition() == 0 ? "":spinner_situation.getSelectedItem().toString().trim();
-//                boolean resources = !cb_resource.isChecked();
-                String url = MyOkHttpUtils.BaseUrl+"/Json/Get_BASIC_INFORMATION.aspx?"
-                        + "page=0"
-                        + "&rows=15"
-                        ;
+                String etAgeFrom = et_age_from.getText().toString().trim();
+                String etAgeTo = et_age_to.getText().toString().trim();
+                int endAge = 0;
+                int startAge = 0;
+                List<String> str = new ArrayList<>();
+                if (!etAgeFrom.equals("") && !etAgeTo.equals("")) {
+                    startAge = Integer.parseInt(etAgeFrom);
+                    endAge = Integer.parseInt(etAgeTo);
+                    if (startAge > endAge && endAge < 0 && startAge < 0) {
+                        Toast.makeText(mContext, "你输入的年龄有误，请重新输入", Toast.LENGTH_SHORT).show();
+                        et_age_from.setText("");
+                        et_age_to.setText("");
+                        return;
+                    }
+                }
 
-//                + "&name=" + et_personName.getText().toString().trim()
-//                        + "&sex=" + sex
-//                        + "&start_age=" + startAge
-//                        + "&end_age=" + endAge
-//                        + "&regionid=" + regionId
-//                        + "&STREET_ID=" + streetId
-//                        + "&COMMITTEE_ID=" + committeeId
-//                        + "&mark=" + mark
-//                        + "&TYPE=" + type
-//                        + "&Current_situation=" + situation
-//                        + "&Current_intent=" + current_intent
-//                        + "&Resources=" + resources
+                String regionName = spinner_country.getSelectedItem().toString().trim();
+                int regionId = 0;
+                for (RegionInfo regionInfo : regionInfoList) {
+                    if (regionInfo.getName() == regionName) {
+                        regionId = regionInfo.getRegionId();
+                    }
+                }
+
+                str.add(String.valueOf(regionId));
+
+                String streetName = spinner_street.getSelectedItem().toString().trim();
+                int streetId = 0;
+                for (StreetInfo streetInfo : streetList) {
+                    if (streetInfo.getStreetName() == streetName) {
+                        streetId = Integer.parseInt(streetInfo.getId());
+                    }
+                }
+
+                str.add(String.valueOf(streetId));
+
+                String committeeName = spinner_neighborhood_committee.getSelectedItem().toString
+                        ().trim();
+                Log.e("committeeName", "committeeName: " + committeeName);
+                int committeeId = 0;
+                for (CommitteeInfo committeeInfo : committeeInfoList) {
+                    if (committeeInfo.getCommitteeName().equals(committeeName)) {
+                        committeeId = committeeInfo.getId();
+                    }
+                }
+                str.add(String.valueOf(committeeId));
+
+//                Log.e("CommitteeId", "onClick: " + committeeId);
+                String sex = "";
+                if (!spinner_sex.getSelectedItem().toString().trim().equals("全部")) {
+                    sex = spinner_sex.getSelectedItem().toString().trim();
+                }
+
+                str.add(sex);
+
+
+                String mark = spinner_identifying.getSelectedItemPosition() == 0 ? "" :
+                        spinner_identifying.getSelectedItem().toString().trim();
+                String type = spinner_status.getSelectedItemPosition() == 0 ? "" : spinner_status
+                        .getSelectedItem().toString().trim();
+                String situation = spinner_situation.getSelectedItemPosition() == 0 ? "" :
+                        spinner_situation.getSelectedItem().toString().trim();
+                String current_intent = spinner_current_intent.getSelectedItemPosition() == 0 ?
+                        "" : spinner_situation.getSelectedItem().toString().trim();
+                boolean resources = !cb_resource.isChecked();
+
+                str.add(mark);
+                str.add(type);
+                str.add(situation);
+                str.add(current_intent);
+
+                for (String string : str) {
+                    Log.e("Str", "onClick: " + string);
+                }
+                String url_suffix= "&name=" + et_personName.getText().toString().trim()
+                        + "&sex=" + sex
+                        + "&start_age=" + (startAge == 0 ? "" : startAge)
+                        + "&end_age=" + (endAge == 0 ? "" : endAge)
+                        + "&regionid=" + (regionId == 0 ? "" : regionId)
+                        + "&STREET_ID=" + (streetId == 0 ? "" : streetId)
+                        + "&COMMITTEE_ID=" + (committeeId == 0 ? "" : committeeId)
+                        + "&mark=" + mark
+                        + "&TYPE=" + type
+                        + "&Current_situation=" + situation
+                        + "&Current_intent=" + current_intent
+                        + "&Resources=" + resources;
                 Intent intent = new Intent(mContext, PersonalInfoQueryResult.class);
-                intent.putExtra("queryUrl", url);
+                intent.putExtra("queryUrl", url_suffix);
                 startActivity(intent);
                 break;
             case R.id.btn_scanning:
@@ -383,6 +413,11 @@ public class PersonalInfoQuery extends BaseActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 判断当前状态，来改变摸底情况 Spinner 的列表
+     *
+     * @param value
+     */
     private void initSpinnerSituation(String value) {
         if (value.trim().equals("登记失业")) {
             setSpinner(spinner_situation, R.array.personmodishiye);
