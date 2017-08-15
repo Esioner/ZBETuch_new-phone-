@@ -19,6 +19,7 @@
 
 
     <Button
+        android:id="@+id/btn_service_record_new_create"
         android:layout_marginRight="10dp"
         android:layout_width="50dp"
         android:layout_height="30dp"

@@ -8,4 +8,9 @@
         android:layout_height="wrap_content"
         android:text="教育信息"/>
 
+    <ListView
+        android:id="@+id/lv_fmt_education_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
 </LinearLayout>

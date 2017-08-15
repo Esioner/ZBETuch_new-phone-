@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <!--防止屏幕旋转变形，锁定竖屏-->
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.PersonInfoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -40,7 +40,7 @@
             android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".activity.PersonInfoActivity"
+        <activity android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".activity.PersonalInfoQuery"

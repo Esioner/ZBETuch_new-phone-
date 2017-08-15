@@ -15,12 +15,14 @@ import com.youli.zbetuch.jingan.R;
 
 public class PersonInfoFragment extends Fragment{
 
+    private View contentView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view=LayoutInflater.from(getContext()).inflate(R.layout.framgment_personal_info,container,false);
+        contentView=LayoutInflater.from(getContext()).inflate(R.layout.framgment_personal_info,container,false);
 
-        return view;
+        return contentView;
     }
 }
