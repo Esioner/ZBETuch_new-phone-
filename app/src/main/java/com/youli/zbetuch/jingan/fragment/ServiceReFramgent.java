@@ -49,13 +49,12 @@ public class ServiceReFramgent extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getActivity(), "新建", Toast.LENGTH_SHORT).show();
+                showNewDialog();
 
             }
         });
 
 
-        data.clear();
         data.add(new ServiceReInfo("张三", "2017-8-14", "职介指导", "备注备注备注"));
         data.add(new ServiceReInfo("李四", "2017-8-14", "职介指导", "备注备注备注"));
         data.add(new ServiceReInfo("王五", "2017-8-15", "职介指导", "备注备注备注"));
@@ -117,6 +116,18 @@ public class ServiceReFramgent extends Fragment {
         });
 
         builder.show();
+    }
+
+    private void showNewDialog(){
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+        View view=LayoutInflater.from(getActivity()).inflate(R.layout.dialog_fmt_service_record_new,null);
+        builder.setView(view);
+
+        AlertDialog dialog=builder.create();
+        dialog.show();
+
+
     }
 
 }

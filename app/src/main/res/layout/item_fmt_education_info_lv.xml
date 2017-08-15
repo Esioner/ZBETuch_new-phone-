@@ -18,6 +18,7 @@
         android:background="#000000"></View>
 
     <LinearLayout
+        android:background="#b7daf4"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,6 +70,7 @@
         android:background="#000000"></View>
 
     <LinearLayout
+        android:background="#b7daf4"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -105,6 +107,7 @@
                 android:text="结束时间"/>
 
             <TextView
+                android:id="@+id/tv_item_fmt_education_info_endtime"
                 android:paddingLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -40,18 +40,20 @@ public class PersonalInfoQueryResult extends BaseActivity {
         setContentView(R.layout.personal_info_query_result_list_layout);
         lv_personalInfo = (ListView) findViewById(R.id.lv);
         Intent intent = getIntent();
-        String url = intent.getStringExtra("queryUrl");
-        Log.e("URL", "onCreate: "+url);
+        String url_suffix = intent.getStringExtra("queryUrl");
+        int rows = 50;
+        String url = MyOkHttpUtils.BaseUrl + "/Json/Get_BASIC_INFORMATION.aspx?"+"page=0"+"&rows="+rows+url_suffix;
+        Log.e("URL", "onCreate: " + url);
         loadDates(url);
 
     }
 
     private void initData() {
-        if (personalInfoList != null){
+        if (personalInfoList != null) {
             PersonalInfoListAdapter adapter = new PersonalInfoListAdapter(personalInfoList);
             lv_personalInfo.setAdapter(adapter);
-        }else {
-            Toast.makeText(mContext,"数据异常",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mContext, "数据异常", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -64,7 +66,7 @@ public class PersonalInfoQueryResult extends BaseActivity {
                 Response response = MyOkHttpUtils.okHttpGet(url);
                 try {
                     responseBody = response.body().string().trim();
-                    Log.e("TAG",responseBody);
+                    Log.e("TAG", responseBody);
                     if (!responseBody.equals("[]")) {
                         personalInfoList = new Gson().fromJson(responseBody, new
                                 TypeToken<List<PersonalInfoBean>>() {}.getType());
@@ -145,10 +147,12 @@ public class PersonalInfoQueryResult extends BaseActivity {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.tv_id.setText(personalInfoBean.getId());
+
+            viewHolder.tv_id.setText(position+1+"");
             viewHolder.tv_name.setText(personalInfoBean.getName());
             viewHolder.tv_sex.setText(personalInfoBean.getSex());
-            viewHolder.tv_birth_date.setText(personalInfoBean.getBirthDate());
+            String birthDate = personalInfoBean.getBirthDate().substring(0,(personalInfoBean.getBirthDate().indexOf("T")));
+            viewHolder.tv_birth_date.setText(birthDate);
             viewHolder.tv_type.setText(personalInfoBean.getType());
             viewHolder.tv_situation.setText(personalInfoBean.getCurrentSituation());
             return convertView;
