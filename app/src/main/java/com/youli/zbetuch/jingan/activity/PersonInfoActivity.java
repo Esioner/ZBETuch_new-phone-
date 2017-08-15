@@ -1,5 +1,6 @@
 package com.youli.zbetuch.jingan.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,6 +9,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -26,12 +30,15 @@ import java.util.List;
  * Created by ZHengBin on 2017/8/12.
  */
 
-public class PersonInfoActivity extends FragmentActivity{
+public class PersonInfoActivity extends FragmentActivity implements View.OnClickListener{
 
     private ViewPager mViewPager;
     private RadioGroup mRadioGroup;
     private List<Fragment> mFragments;
-int i=0;
+
+    private Button caidanBtn,jiugonggeBtn,zhuyeBtn,guanzhuBtn;
+    private ImageView xiugaiIv;
+   private LinearLayout pifLl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +65,30 @@ int i=0;
 
     private void initView(){
 
+        pifLl= (LinearLayout) findViewById(R.id.ll_person_info_pif);
+
+        xiugaiIv= (ImageView) findViewById(R.id.iv_person_info_modify);
+        xiugaiIv.setOnClickListener(this);
+        caidanBtn= (Button) findViewById(R.id.btn_person_info_caidan);
+        caidanBtn.setOnClickListener(this);
+        jiugonggeBtn= (Button) findViewById(R.id.btn_person_info_jiugongge);
+        jiugonggeBtn.setOnClickListener(this);
+        zhuyeBtn= (Button) findViewById(R.id.btn_person_info_zhuye);
+        zhuyeBtn.setOnClickListener(this);
+        guanzhuBtn= (Button) findViewById(R.id.btn_person_info_follow);
+        guanzhuBtn.setOnClickListener(this);
+
           mViewPager= (ViewPager) findViewById(R.id.vp_person_info);
           mRadioGroup= (RadioGroup) findViewById(R.id.rg_person_info);
         MyFpAdapter adapter=new MyFpAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(adapter);
+<<<<<<< HEAD
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+=======
+        mViewPager.setOffscreenPageLimit(5);
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+>>>>>>> e3b743d901193404a3883e5f5e154d6883310a1d
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -129,5 +154,51 @@ int i=0;
     public void onBackPressed() {
         //super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.btn_person_info_caidan:
+
+                if(pifLl.getVisibility()==View.GONE){
+                    pifLl.setVisibility(View.VISIBLE);
+                }else if(pifLl.getVisibility()==View.VISIBLE){
+                    pifLl.setVisibility(View.GONE);
+                }
+
+                break;
+
+
+            case R.id.btn_person_info_jiugongge:
+
+                Intent fIntent=new Intent(this,FunctionListActivity.class);
+                startActivity(fIntent);
+
+                break;
+
+            case R.id.btn_person_info_zhuye:
+
+                Intent mIntent=new Intent(this,MainLayoutActivity.class);
+                startActivity(mIntent);
+
+                break;
+
+            case R.id.btn_person_info_follow:
+
+                Toast.makeText(this,"关注",Toast.LENGTH_SHORT).show();
+
+                break;
+
+            case R.id.iv_person_info_modify:
+
+                Toast.makeText(this,"修改",Toast.LENGTH_SHORT).show();
+
+                break;
+        }
+
+
     }
 }

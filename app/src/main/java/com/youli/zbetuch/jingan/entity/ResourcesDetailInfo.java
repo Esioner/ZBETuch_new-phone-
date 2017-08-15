@@ -21,7 +21,7 @@ import java.io.Serializable;
 // "_SURVEY_DATE":"2017-03-28","STAFF_Name":null}]
 public class ResourcesDetailInfo implements Serializable{
 
-    private int SHUNXUID;//顺序，要显示的
+    //private int SHUNXUID;//顺序，要显示的
 
    private int ID;
     private int MASTER_ID;
@@ -247,13 +247,13 @@ public class ResourcesDetailInfo implements Serializable{
         this.SFZ = SFZ;
     }
 
-    public int getSHUNXUID() {
-        return SHUNXUID;
-    }
-
-    public void setSHUNXUID(int SHUNXUID) {
-        this.SHUNXUID = SHUNXUID;
-    }
+//    public int getSHUNXUID() {
+//        return SHUNXUID;
+//    }
+//
+//    public void setSHUNXUID(int SHUNXUID) {
+//        this.SHUNXUID = SHUNXUID;
+//    }
 
     public String getSTAFF_Name() {
         return STAFF_Name;

@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.youli.zbetuch.jingan.R;
 
@@ -15,12 +17,34 @@ import com.youli.zbetuch.jingan.R;
 
 public class PersonReFragment extends Fragment{
 
+    private View contentView;
+
+    private Button findWorkBtn;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view=LayoutInflater.from(getContext()).inflate(R.layout.framgment_personal_resume,container,false);
+        contentView=LayoutInflater.from(getContext()).inflate(R.layout.framgment_personal_resume,container,false);
 
-        return view;
+        initView(contentView);
+
+
+        return contentView;
     }
+
+    private void initView(View view){
+
+        findWorkBtn= (Button) view.findViewById(R.id.btn_person_resume_find_work);
+        findWorkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getActivity(),"查找对应工作",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
 }

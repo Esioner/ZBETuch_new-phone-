@@ -476,6 +476,7 @@
         </LinearLayout>
 
     <Button
+        android:id="@+id/btn_person_resume_find_work"
     android:background="#4987c2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

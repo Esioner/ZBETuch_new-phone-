@@ -74,9 +74,9 @@ public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup
                     if(!((List<ResourcesDetailInfo>)(msg.obj)).isEmpty()){
                         dInfo.addAll((List<ResourcesDetailInfo>)msg.obj);
 
-                        for(int i=0;i<dInfo.size();i++){
-                            dInfo.get(i).setSHUNXUID(i+1);
-                        }
+//                        for(int i=0;i<dInfo.size();i++){
+//                            dInfo.get(i).setSHUNXUID(i+1);
+//                        }
 
                         noDataTv.setVisibility(View.GONE);
                         lv.setVisibility(View.VISIBLE);
@@ -263,7 +263,7 @@ public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup
             public void convert(CommonViewHolder holder, ResourcesDetailInfo item, int position) {
 
                 TextView numTv=holder.getView(R.id.item_ziyuan_detail_num_tv);
-                numTv.setText(data.get(position).getSHUNXUID()+"");
+                numTv.setText(position+1+"");
                 TextView nameTv=holder.getView(R.id.item_ziyuan_detail_name_tv);
                 nameTv.setText(data.get(position).getNAME());
                 TextView idCardTv=holder.getView(R.id.item_ziyuan_detail_idcard_tv);
