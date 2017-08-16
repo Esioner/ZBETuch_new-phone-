@@ -74,12 +74,9 @@ public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup
                     if(!((List<ResourcesDetailInfo>)(msg.obj)).isEmpty()){
                         dInfo.addAll((List<ResourcesDetailInfo>)msg.obj);
 
-//                        for(int i=0;i<dInfo.size();i++){
-//                            dInfo.get(i).setSHUNXUID(i+1);
-//                        }
-
                         noDataTv.setVisibility(View.GONE);
                         lv.setVisibility(View.VISIBLE);
+
                         lvSetAdapter(dInfo);
                     }else{
                         totalTv.setText("总共0条数据");
@@ -232,26 +229,24 @@ public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup
                 setTypeId();
                 sfzStr="null";
 
-              //  try {
+
                     getNetWorkData(masterId,typeStr,typeId,"null",pageIndex);
-//                }catch (Exception e) {
-//                    e.printStackTrace();
-//                }
+
 
                 break;
             case R.id.ziyuan_detail_yicha_rb:
                 rg.check(R.id.ziyuan_detail_yicha_rb);
                 setTypeId();
                 sfzStr="null";
-             //   try {
+
                     getNetWorkData(masterId,typeStr,typeId,"null",pageIndex);
-//                }catch (Exception e) {
-//                    e.printStackTrace();
-//                }
+
                 break;
         }
 
     }
+
+
 
     private void lvSetAdapter(final List<ResourcesDetailInfo> data){
 

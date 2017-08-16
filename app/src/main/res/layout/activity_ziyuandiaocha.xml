@@ -31,25 +31,29 @@
 
         <TextView
             android:padding="5dp"
-            android:layout_width="wrap_content"
+            android:layout_weight="1.5"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="调查类型"/>
 
         <Spinner
             android:id="@+id/ziyuandiaocha_type_spinner"
-            android:layout_width="wrap_content"
+            android:layout_weight="1.7"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/myspinner_style"
             android:spinnerMode="dialog"/>
         <TextView
             android:padding="5dp"
-            android:layout_width="wrap_content"
+            android:layout_weight="0.8"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="街道"/>
 
         <Spinner
             android:id="@+id/ziyuandiaocha_street_spinner"
-            android:layout_width="wrap_content"
+            android:layout_weight="2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/myspinner_style"
             android:spinnerMode="dialog"

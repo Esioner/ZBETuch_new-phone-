@@ -614,6 +614,8 @@
                     />
 
                 <EditText
+                    android:paddingLeft="5dp"
+                    android:id="@+id/shiwuye_detail_diaocharen_et"
                     android:background="@drawable/shape_shiwuye_detail_et"
                     android:focusable="false"
                     android:textColor="#c0c0c0"
@@ -638,14 +640,25 @@
                     android:layout_height="wrap_content"
                     />
 
-                <EditText
-                    android:background="@drawable/shape_shiwuye_detail_et"
+                <Spinner
+                    android:spinnerMode="dialog"
+                    android:id="@+id/sp_shiwuye_detail_curr_sta"
+                    android:background="@drawable/spinner_bg"
                     android:textSize="16sp"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:layout_height="wrap_content"  />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="9dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
                 <TextView
-                    android:gravity="center_horizontal"
                     android:textColor="#ffffff"
                     android:textSize="16sp"
                     android:text="当前意向:"
@@ -654,13 +667,16 @@
                     android:layout_height="wrap_content"
                     />
 
-                <EditText
-                    android:background="@drawable/shape_shiwuye_detail_et"
+                <Spinner
+                    android:spinnerMode="dialog"
+                    android:id="@+id/sp_shiwuye_detail_curr_int"
+                    android:background="@drawable/spinner_bg"
                     android:textSize="16sp"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:layout_height="wrap_content"  />
             </LinearLayout>
+
            <LinearLayout
                android:padding="9dp"
                android:layout_width="match_parent"

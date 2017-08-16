@@ -1,5 +1,8 @@
 package com.youli.zbetuch.jingan.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -63,6 +66,7 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
 
     }
 
+
     private void initView(){
 
         pifLl= (LinearLayout) findViewById(R.id.ll_person_info_pif);
@@ -82,15 +86,12 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
           mRadioGroup= (RadioGroup) findViewById(R.id.rg_person_info);
         MyFpAdapter adapter=new MyFpAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(adapter);
-<<<<<<< HEAD
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-=======
         mViewPager.setOffscreenPageLimit(5);
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
->>>>>>> e3b743d901193404a3883e5f5e154d6883310a1d
+
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position,float positionOffset, int positionOffsetPixels) {
 
             }
 
@@ -117,7 +118,6 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
                 }
 
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
 
@@ -152,7 +152,7 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+
         finish();
     }
 
@@ -194,11 +194,34 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
 
             case R.id.iv_person_info_modify:
 
-                Toast.makeText(this,"修改",Toast.LENGTH_SHORT).show();
+                showModifyDialog();
 
                 break;
         }
 
 
     }
+
+    private void showModifyDialog(){
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+
+        builder.setTitle("修改信息提示");
+        builder.setMessage("您确定修改此人的信息吗？");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(PersonInfoActivity.this,"确定",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
+    }
+
 }

@@ -8,6 +8,11 @@
         <item name="android:windowFullscreen">false</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:screenOrientation">portrait</item>
+
+
+
     </style>
 
     <!-- 资源调查页面 -->
@@ -19,7 +24,7 @@
     </style>
 
     <style name="myspinner_style">
-        <item name="android:background">@drawable/spinner_btn1</item>
+        <item name="android:background">@drawable/spinner_bg</item>
     </style>
 
     <style name="gradeate_list_titletext">

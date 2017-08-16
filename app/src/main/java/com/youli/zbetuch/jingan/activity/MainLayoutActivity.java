@@ -58,6 +58,9 @@ public class MainLayoutActivity extends BaseActivity implements View.OnClickList
     private final int SUCCEED_NI=10005;
     private final int  PROBLEM=10006;
 
+    public static String adminName;
+
+
     private Handler mHandler=new Handler(){
 
         @Override
@@ -68,7 +71,7 @@ public class MainLayoutActivity extends BaseActivity implements View.OnClickList
                 case SUCCEED_NAME:
 
                     nameTv.setText(((GetStaffInfo)msg.obj).getNAME());
-
+                    adminName=nameTv.getText().toString().trim();
                     break;
 
                 case SUCCEED_PIC:
@@ -163,15 +166,12 @@ public class MainLayoutActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_layout);
 
-
-
         nameTv= (TextView) findViewById(R.id.main_layout_name_tv);
         picIv= (ImageView) findViewById(R.id.main_layout_head_iv);
         gv= (GridView) findViewById(R.id.main_layout_gv);
         workBtn= (Button) findViewById(R.id.main_layout_work_btn);
         workBtn.setOnClickListener(this);
         initData();
-
 
     }
 
