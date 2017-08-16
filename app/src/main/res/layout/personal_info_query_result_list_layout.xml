@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:ptr="http://schemas.android.com/tools"
               android:orientation="vertical">
 
     <ImageView
@@ -48,11 +49,18 @@
             android:text="摸底情况"/>
     </LinearLayout>
 
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/lv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="13">
+        android:layout_weight="13"
+        android:cacheColorHint="#000000"
+        android:divider="#19000000"
+        android:dividerHeight="4dp"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="true"
+        android:smoothScrollbar="true"
+        ptr:ptrAnimationStyle="rotate"
+        />
 
-    </ListView>
 </LinearLayout>

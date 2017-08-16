@@ -82,13 +82,9 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
           mRadioGroup= (RadioGroup) findViewById(R.id.rg_person_info);
         MyFpAdapter adapter=new MyFpAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(adapter);
-<<<<<<< HEAD
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-=======
         mViewPager.setOffscreenPageLimit(5);
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
->>>>>>> e3b743d901193404a3883e5f5e154d6883310a1d
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 

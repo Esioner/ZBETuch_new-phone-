@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.youli.zbetuch.jingan"
-    android:versionName="版本日期：2017-07-03 \n新增高校专项调查">
+          package="com.youli.zbetuch.jingan"
+          android:versionName="版本日期：2017-07-03 \n新增高校专项调查">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".utils.MyApplication"
         android:allowBackup="true"
@@ -14,39 +15,51 @@
         android:theme="@style/AppTheme">
         <!--防止屏幕旋转变形，锁定竖屏-->
         <activity
-            android:name=".activity.PersonInfoActivity"
+            android:name=".activity.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MainLayoutActivity"
+        <activity
+            android:name=".activity.MainLayoutActivity"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".activity.FunctionListActivity"
+        <activity
+            android:name=".activity.FunctionListActivity"
             android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".activity.ZiyuandiaochaActivity"
+        <activity
+            android:name=".activity.ZiyuandiaochaActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.ZiyuanDetailListActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.ShiwuyeDetailActivity"
+        <activity
+            android:name=".activity.ZiyuanDetailListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".activity.ShiwuyeDetailActivity"
             android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".activity.LoginActivity"
+        <activity
+            android:name=".activity.PersonInfoActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.PersonalInfoQuery"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.PersonalInfoQueryResult"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.PersonalInfoQuery"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activity.PersonalInfoQueryResult"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>
