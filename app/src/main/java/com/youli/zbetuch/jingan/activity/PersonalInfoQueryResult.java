@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.youli.zbetuch.jingan.R;
@@ -55,13 +56,26 @@ public class PersonalInfoQueryResult extends BaseActivity {
         String url = jointUrl(index);
         Log.e("URL", "onCreate: " + url);
         loadDates(url);
-
-
     }
 
     private void initListView() {
         lv_personalInfo = (PullToRefreshListView) findViewById(R.id.lv);
         lv_personalInfo.setMode(PullToRefreshBase.Mode.BOTH);
+
+        //设置下拉刷新内容
+        ILoadingLayout startLabels = lv_personalInfo
+                .getLoadingLayoutProxy(true, false);
+        startLabels.setPullLabel("下拉刷新");// 刚下拉时，显示的提示
+        startLabels.setRefreshingLabel("正在刷新...");// 刷新时
+        startLabels.setReleaseLabel("释放来刷新");// 下来达到一定距离时，显示的提示
+        //设置上拉加载更多内容
+        ILoadingLayout endLabels = lv_personalInfo.getLoadingLayoutProxy(
+                false, true);
+        endLabels.setPullLabel("上拉加载更多");// 刚下拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("释放以加载更多...");// 下来达到一定距离时，显示的提示
+
+
         lv_personalInfo.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
