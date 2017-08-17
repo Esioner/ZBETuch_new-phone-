@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ptr="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:ptr="http://schemas.android.com/tools"
               android:orientation="vertical">
 
     <ImageView
@@ -57,10 +57,10 @@
         android:cacheColorHint="#000000"
         android:divider="#19000000"
         android:dividerHeight="4dp"
-        android:fastScrollEnabled="false"
         android:footerDividersEnabled="true"
         android:smoothScrollbar="true"
         ptr:ptrAnimationStyle="rotate"
-        />
+        >
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </LinearLayout>
