@@ -53,6 +53,7 @@
         android:orientation="horizontal">
         
         <ImageView
+            android:id="@+id/iv_person_info_head"
             android:paddingLeft="10dp"
             android:layout_gravity="center_vertical"
             android:layout_centerVertical="true"
@@ -87,10 +88,11 @@
             android:layout_height="wrap_content"
             android:text="姓        名:"/>
         <TextView
+            android:id="@+id/tv_person_info_name"
             android:textColor="#ffffff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="徐佳"/>
+            />
 
         <ImageView
             android:id="@+id/iv_person_info_modify"
@@ -123,10 +125,11 @@
             android:layout_height="wrap_content"
             android:text="性        别:"/>
         <TextView
+            android:id="@+id/tv_person_info_sex"
             android:textColor="#ffffff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="男"/>
+          />
     </LinearLayout>
 
     <LinearLayout
@@ -142,10 +145,11 @@
             android:layout_height="wrap_content"
             android:text="状        态:"/>
         <TextView
+            android:id="@+id/tv_person_info_status"
             android:textColor="#ffffff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="未登记失业"/>
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -161,10 +165,11 @@
             android:layout_height="wrap_content"
             android:text="证件号码:"/>
         <TextView
+            android:id="@+id/tv_person_info_sfz"
             android:textColor="#ffffff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="310123456789012345"/>
+            />
     </LinearLayout>
 
 </LinearLayout>

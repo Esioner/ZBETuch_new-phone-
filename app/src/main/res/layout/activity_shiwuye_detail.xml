@@ -524,6 +524,7 @@
                     android:textColor="#ffffff"/>
 
                 <EditText
+                    android:singleLine="true"
                     android:id="@+id/shiwuye_detail_phone_et"
                     android:textColor="#c0c0c0"
                     android:paddingLeft="3dp"
@@ -692,6 +693,7 @@
                    android:text="备  注:  "/>
 
                <EditText
+                   android:id="@+id/shiwuye_detail_remarks_et"
                    android:layout_width="0dp"
                    android:layout_weight="1"
                    android:layout_height="match_parent"

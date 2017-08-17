@@ -220,7 +220,7 @@ public class ZiyuandiaochaActivity extends BaseActivity implements View.OnClickL
             public void convert(CommonViewHolder holder, ResourcesInfo item, int position) {
 
                 TextView numTv = holder.getView(R.id.item_ziyuandiaocha_number_tv);
-                numTv.setText(data.get(position).getID() + "");
+                numTv.setText(position+1 + "");
                 TextView typeTv = holder.getView(R.id.item_ziyuandiaocha_type_tv);
                 typeTv.setText(data.get(position).getTYPE());
                 TextView nameTv = holder.getView(R.id.item_ziyuandiaocha_operator_tv);

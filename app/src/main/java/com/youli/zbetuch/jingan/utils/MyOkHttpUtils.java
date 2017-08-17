@@ -101,6 +101,26 @@ public class MyOkHttpUtils {
         return response;
     }
 
+    public static Response okHttpPost(String url,String ID,String DQYX,String MQZK,String DATE,String MARK){
+        getInstance();
+        String cookies = SharedPreferencesUtils.getString("cookies");
+        RequestBody requestBody=new FormBody.Builder()
+                .add("ID",ID).add("NEW_DQYX",DQYX).add("NEW_MQZK",MQZK)
+                .add("SURVEY_DATE",DATE).add("MARK",MARK)
+                .build();
+        Request request=new Request.Builder().url(url)
+                .post(requestBody).addHeader("cookie",cookies).build();
+        Response response;
+
+        try {
+            response=okHttpClient.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return  null;
+        }
+    return  response;
+    }
+
     //异步Get
     public static void okHttpAsynGet(String url, Callback callback) {
         getInstance();

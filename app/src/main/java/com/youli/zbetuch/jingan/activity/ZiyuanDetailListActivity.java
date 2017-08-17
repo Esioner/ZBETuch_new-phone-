@@ -7,19 +7,26 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.youli.zbetuch.jingan.R;
 import com.youli.zbetuch.jingan.adapter.CommonAdapter;
+import com.youli.zbetuch.jingan.bean.personalInfoBean.PersonalInfoBean;
 import com.youli.zbetuch.jingan.entity.CommonViewHolder;
 import com.youli.zbetuch.jingan.entity.ResourcesDetailInfo;
 import com.youli.zbetuch.jingan.entity.ResourcesInfo;
@@ -38,7 +45,9 @@ import okhttp3.Response;
  * Created by liutao on 2017/8/9.
  */
 
-public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener,View.OnClickListener,XListView.IXListViewListener,AdapterView.OnItemClickListener{
+public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener,View.OnClickListener,AdapterView.OnItemClickListener{
+
+
 
     private Context mContext=ZiyuanDetailListActivity.this;
     private TextView typeTv;
@@ -51,7 +60,7 @@ public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup
     private int pageIndex;
     private ResourcesInfo rInfo;
     private TextView totalTv,noDataTv;
-    private XListView lv;
+    private PullToRefreshListView lv;
     private RadioGroup rg;
     private List<ResourcesDetailInfo> dInfo=new ArrayList<>();
     private CommonAdapter commonAdapter;
@@ -59,6 +68,9 @@ public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup
     private final int SUCCESS=10000;
     private final int NODATA=10001;
     private final int PROBLEM=10002;
+
+    public final static int RequestCode=111111;
+    public final static int ResultCode=222222;
 
     private Handler mHandler=new Handler(){
 
@@ -73,7 +85,6 @@ public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup
 
                     if(!((List<ResourcesDetailInfo>)(msg.obj)).isEmpty()){
                         dInfo.addAll((List<ResourcesDetailInfo>)msg.obj);
-
                         noDataTv.setVisibility(View.GONE);
                         lv.setVisibility(View.VISIBLE);
 
@@ -92,7 +103,9 @@ public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup
 
                     break;
                 case NODATA:
-
+                    if (lv.isRefreshing()) {
+                        lv.onRefreshComplete();
+                    }
                     Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT).show();
 
                     break;
@@ -129,14 +142,39 @@ public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup
             typeTv.setText("无业调查");
         }
 
-        lv= (XListView) findViewById(R.id.ziyuan_detail_lv);
-        lv.setPullLoadEnable(true);// 设置让它上拉，FALSE为不让上拉，便不加载更多数据
-        lv.setXListViewListener(this);
+        lv= (PullToRefreshListView) findViewById(R.id.ziyuan_detail_lv);
+        lv.setMode(PullToRefreshBase.Mode.BOTH);
+
 
         lv.setOnItemClickListener(this);
 
         getNetWorkData(masterId,typeStr,typeId,"null",pageIndex);
 
+        lv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                        pageIndex=0;
+        if(sfzStr==null){
+            getNetWorkData(masterId,typeStr,typeId,"null",pageIndex);
+        }else{
+            getNetWorkData(masterId,typeStr,typeId,sfzStr,pageIndex);
+        }
+
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+                        pageIndex++;
+
+        if(sfzStr==null){
+            getNetWorkData(masterId,typeStr,typeId,"null",pageIndex);
+        }else{
+            getNetWorkData(masterId,typeStr,typeId,sfzStr,pageIndex);
+        }
+
+            }
+        });
     }
 
 //身份证查询:
@@ -248,37 +286,46 @@ public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup
 
 
 
+
     private void lvSetAdapter(final List<ResourcesDetailInfo> data){
 
-                commonAdapter=null;
+          if(commonAdapter==null) {
 
-                commonAdapter=new CommonAdapter<ResourcesDetailInfo>(this,dInfo,R.layout.item_ziyuan_detail_lv) {
+              commonAdapter = new CommonAdapter<ResourcesDetailInfo>(this, dInfo, R.layout.item_ziyuan_detail_lv) {
 
-            @Override
-            public void convert(CommonViewHolder holder, ResourcesDetailInfo item, int position) {
+                  @Override
+                  public void convert(CommonViewHolder holder, ResourcesDetailInfo item, int position) {
 
-                TextView numTv=holder.getView(R.id.item_ziyuan_detail_num_tv);
-                numTv.setText(position+1+"");
-                TextView nameTv=holder.getView(R.id.item_ziyuan_detail_name_tv);
-                nameTv.setText(data.get(position).getNAME());
-                TextView idCardTv=holder.getView(R.id.item_ziyuan_detail_idcard_tv);
-                idCardTv.setText(data.get(position).getSFZ());
-                TextView juWeiTv=holder.getView(R.id.item_ziyuan_detail_juwei_tv);
-                juWeiTv.setText(data.get(position).getJW());
+                      TextView numTv = holder.getView(R.id.item_ziyuan_detail_num_tv);
+                      numTv.setText(position + 1 + "");
+                      TextView nameTv = holder.getView(R.id.item_ziyuan_detail_name_tv);
+                      nameTv.setText(data.get(position).getNAME());
+                      TextView idCardTv = holder.getView(R.id.item_ziyuan_detail_idcard_tv);
+                      idCardTv.setText(data.get(position).getSFZ());
+                      TextView juWeiTv = holder.getView(R.id.item_ziyuan_detail_juwei_tv);
+                      juWeiTv.setText(data.get(position).getJW());
 
-                LinearLayout ll=holder.getView(R.id.item_ziyuan_detail_ll);
-                if(position%2==0){
-                 ll.setBackgroundResource(R.drawable.selector_ziyuandiaocha_item1);
-                }else{
-                    ll.setBackgroundResource(R.drawable.selector_ziyuandiaocha_item2);
-                }
+                      LinearLayout ll = holder.getView(R.id.item_ziyuan_detail_ll);
+                      if (position % 2 == 0) {
+                          ll.setBackgroundResource(R.drawable.selector_ziyuandiaocha_item1);
+                      } else {
+                          ll.setBackgroundResource(R.drawable.selector_ziyuandiaocha_item2);
+                      }
 
-            }
-        };
+                  }
+              };
 
-        lv.setAdapter(commonAdapter);
-        totalTv.setText("总共"+data.get(0).getRecordCount()+"条数据");
+              lv.setAdapter(commonAdapter);
 
+          }else{
+
+              commonAdapter.notifyDataSetChanged();
+
+          }
+        if (lv.isRefreshing()) {
+                    lv.onRefreshComplete();
+        }
+        totalTv.setText("总共" + data.get(0).getRecordCount() + "条数据");
     }
 
     private void setTypeId(){
@@ -326,34 +373,6 @@ public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup
 
     }
 
-    @Override
-    public void onRefresh() {//刷新
-
-        pageIndex=0;
-        if(sfzStr==null){
-            getNetWorkData(masterId,typeStr,typeId,"null",pageIndex);
-        }else{
-            getNetWorkData(masterId,typeStr,typeId,sfzStr,pageIndex);
-        }
-
-
-        lv.stopRefresh();
-        lv.setRefreshTime("刚刚");
-    }
-
-    @Override
-    public void onLoadMore() {//加载更多
-
-        pageIndex++;
-
-        if(sfzStr==null){
-            getNetWorkData(masterId,typeStr,typeId,"null",pageIndex);
-        }else{
-            getNetWorkData(masterId,typeStr,typeId,sfzStr,pageIndex);
-        }
-
-        lv.stopLoadMore();
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -370,7 +389,23 @@ public class ZiyuanDetailListActivity extends BaseActivity implements RadioGroup
         intent.putExtra("RDInfo",dInfo.get(position-1));
         intent.putExtra("IsCheck",isCheck);
         
-        startActivity(intent);
+        startActivityForResult(intent,RequestCode);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode==RequestCode&&resultCode==ResultCode){
+
+           // Toast.makeText(mContext,"回传",Toast.LENGTH_SHORT).show();
+            if(sfzStr==null){
+                getNetWorkData(masterId,typeStr,typeId,"null",0);
+            }else{
+                getNetWorkData(masterId,typeStr,typeId,sfzStr,0);
+            }
+        }
+
 
     }
 }

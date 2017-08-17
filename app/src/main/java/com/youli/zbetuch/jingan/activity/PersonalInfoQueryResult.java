@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +17,15 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.youli.zbetuch.jingan.R;
 import com.youli.zbetuch.jingan.bean.personalInfoBean.PersonalInfoBean;
 import com.youli.zbetuch.jingan.utils.MyOkHttpUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Response;
@@ -31,70 +34,137 @@ import okhttp3.Response;
 public class PersonalInfoQueryResult extends BaseActivity {
     private Context mContext = this;
     private ProgressDialog progressDialog;
-    private List<PersonalInfoBean> personalInfoList;
-    private ListView lv_personalInfo;
+    private List<PersonalInfoBean> personalInfoList = new ArrayList<>();
+    int index = 30;
+    private String url_suffix;
+    private PullToRefreshListView lv_personalInfo;
+    private PersonalInfoListAdapter personalInfoListAdapter;
+    private boolean isFirst = true;
+    int i = 0;
+    List<PersonalInfoBean> infoList = new ArrayList<PersonalInfoBean>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_info_query_result_list_layout);
-        lv_personalInfo = (ListView) findViewById(R.id.lv);
+
+        initListView();
+
         Intent intent = getIntent();
-        String url_suffix = intent.getStringExtra("queryUrl");
-        int rows = 50;
-        String url = MyOkHttpUtils.BaseUrl + "/Json/Get_BASIC_INFORMATION.aspx?"+"page=0"+"&rows="+rows+url_suffix;
+        url_suffix = intent.getStringExtra("queryUrl");
+        String url = jointUrl(index);
         Log.e("URL", "onCreate: " + url);
         loadDates(url);
+
+
+    }
+
+    private void initListView() {
+        lv_personalInfo = (PullToRefreshListView) findViewById(R.id.lv);
+        lv_personalInfo.setMode(PullToRefreshBase.Mode.BOTH);
+        lv_personalInfo.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                String refreshUrl = MyOkHttpUtils.BaseUrl + "/Json/Get_BASIC_INFORMATION" +
+                        ".aspx?page=0&rows=30" + url_suffix;
+                personalInfoList.clear();
+
+                loadDates(refreshUrl);
+                personalInfoListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+               // Toast.makeText(mContext, "上拉加载", Toast.LENGTH_SHORT).show();
+                loadMore();
+
+            }
+        });
+    }
+
+
+    /**
+     * 拼接URL
+     *
+     * @param index
+     */
+    private String jointUrl(int index) {
+        String url = MyOkHttpUtils.BaseUrl + "/Json/Get_BASIC_INFORMATION.aspx?" +
+                "page=0&rows=" +
+                index + url_suffix;
+        return url;
+    }
+
+    //加载更多
+    private void loadMore() {
+
+        String url = MyOkHttpUtils.BaseUrl + "/Json/Get_BASIC_INFORMATION.aspx?" +
+                "page=" + (++i) + "&rows=30" + url_suffix;
+        loadDates(url);
+        for (PersonalInfoBean list : personalInfoList) {
+            Log.w("2017/08/17", "loadMore: " + list.getName());
+        }
+        personalInfoListAdapter.notifyDataSetChanged();
 
     }
 
     private void initData() {
         if (personalInfoList != null) {
-            PersonalInfoListAdapter adapter = new PersonalInfoListAdapter(personalInfoList);
-            lv_personalInfo.setAdapter(adapter);
+            personalInfoListAdapter = new PersonalInfoListAdapter(personalInfoList);
         } else {
             Toast.makeText(mContext, "数据异常", Toast.LENGTH_SHORT).show();
         }
+
+        if (personalInfoListAdapter != null && isFirst) {
+            lv_personalInfo.setAdapter(personalInfoListAdapter);
+            isFirst = false;
+        }
+
     }
 
     private void loadDates(final String url) {
-        showProgress();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String responseBody = null;
                 Response response = MyOkHttpUtils.okHttpGet(url);
                 try {
-                    responseBody = response.body().string().trim();
+                    final String responseBody = response.body().string().trim();
                     Log.e("TAG", responseBody);
                     if (!responseBody.equals("[]")) {
-                        personalInfoList = new Gson().fromJson(responseBody, new
-                                TypeToken<List<PersonalInfoBean>>() {}.getType());
+                        Type type = new TypeToken<List<PersonalInfoBean>>() {}.getType();
+                        infoList = new Gson().fromJson(responseBody, type);
+                        personalInfoList.addAll(infoList);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                initData();
-                                progressDialog.dismiss();
+                                if (isFirst) {
+                                    initData();
+                                }
                             }
                         });
-
                     } else {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-                            }
-                        });
                         Looper.prepare();
                         Toast.makeText(mContext, "对不起，没有信息", Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    if (lv_personalInfo.isRefreshing()) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                lv_personalInfo.onRefreshComplete();
+                            }
+                        });
+
+                    }
                 }
             }
-        }).start();
+        }
 
+        ).start();
     }
 
     private void showProgress() {
@@ -148,17 +218,18 @@ public class PersonalInfoQueryResult extends BaseActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            viewHolder.tv_id.setText(position+1+"");
+            viewHolder.tv_id.setText(position + 1 + "");
             viewHolder.tv_name.setText(personalInfoBean.getName());
             viewHolder.tv_sex.setText(personalInfoBean.getSex());
-            String birthDate = personalInfoBean.getBirthDate().substring(0,(personalInfoBean.getBirthDate().indexOf("T")));
+            String birthDate = personalInfoBean.getBirthDate().substring(0, (personalInfoBean
+                    .getBirthDate().indexOf("T")));
             viewHolder.tv_birth_date.setText(birthDate);
             viewHolder.tv_type.setText(personalInfoBean.getType());
             viewHolder.tv_situation.setText(personalInfoBean.getCurrentSituation());
 
-            if(position%2==0){
+            if (position % 2 == 0) {
                 convertView.setBackgroundResource(R.color.skyBlue);
-            }else if (position%2 != 0){
+            } else if (position % 2 != 0) {
                 convertView.setBackgroundResource(R.color.white);
             }
             return convertView;
@@ -173,6 +244,6 @@ public class PersonalInfoQueryResult extends BaseActivity {
             TextView tv_situation;
         }
     }
-}
 
+}
 

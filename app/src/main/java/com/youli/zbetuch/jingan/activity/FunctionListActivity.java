@@ -65,28 +65,28 @@ public class FunctionListActivity extends BaseActivity{
                                     Intent intent1=new Intent(mContext,ZiyuandiaochaActivity.class);
                                     startActivity(intent1);
                                     break;
-                                default:
-                                    Toast.makeText(FunctionListActivity.this, "当前点击第" + finalI
-                                            + "页第" + position + "个", Toast.LENGTH_SHORT).show();
-                                    break;
+//                                default:
+//                                    Toast.makeText(FunctionListActivity.this, "当前点击第" + finalI
+//                                            + "页第" + position + "个", Toast.LENGTH_SHORT).show();
+//                                    break;
                             }
                             break;
-                        case 1:
-                            switch (position) {
-                                default:
-                                    Toast.makeText(FunctionListActivity.this, "当前点击第" + finalI
-                                            + "页第" + position + "个", Toast.LENGTH_SHORT).show();
-                                    break;
-                            }
-                            break;
-                        case 2:
-                            switch (position) {
-                                default:
-                                    Toast.makeText(FunctionListActivity.this, "当前点击第" + finalI
-                                            + "页第" + position + "个", Toast.LENGTH_SHORT).show();
-                                    break;
-                            }
-                            break;
+//                        case 1:
+//                            switch (position) {
+//                                default:
+//                                    Toast.makeText(FunctionListActivity.this, "当前点击第" + finalI
+//                                            + "页第" + position + "个", Toast.LENGTH_SHORT).show();
+//                                    break;
+//                            }
+//                            break;
+//                        case 2:
+//                            switch (position) {
+//                                default:
+//                                    Toast.makeText(FunctionListActivity.this, "当前点击第" + finalI
+//                                            + "页第" + position + "个", Toast.LENGTH_SHORT).show();
+//                                    break;
+//                            }
+ //                           break;
                     }
                 }
             });

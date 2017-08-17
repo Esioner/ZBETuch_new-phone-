@@ -2,9 +2,14 @@ package com.youli.zbetuch.jingan.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -16,18 +21,26 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.youli.zbetuch.jingan.R;
 import com.youli.zbetuch.jingan.adapter.MyFpAdapter;
+import com.youli.zbetuch.jingan.entity.PersonInfo;
 import com.youli.zbetuch.jingan.fragment.EduInfoFragment;
 import com.youli.zbetuch.jingan.fragment.FamilyInfoFragment;
 import com.youli.zbetuch.jingan.fragment.PersonInfoFragment;
 import com.youli.zbetuch.jingan.fragment.PersonReFragment;
 import com.youli.zbetuch.jingan.fragment.ServiceReFramgent;
+import com.youli.zbetuch.jingan.utils.IOUtil;
+import com.youli.zbetuch.jingan.utils.MyOkHttpUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Response;
 
 /**
  * Created by ZHengBin on 2017/8/12.
@@ -35,17 +48,52 @@ import java.util.List;
 
 public class PersonInfoActivity extends FragmentActivity implements View.OnClickListener{
 
+    private Context mContext=PersonInfoActivity.this;
+
     private ViewPager mViewPager;
     private RadioGroup mRadioGroup;
     private List<Fragment> mFragments;
 
     private Button caidanBtn,jiugonggeBtn,zhuyeBtn,guanzhuBtn;
     private ImageView xiugaiIv;
-   private LinearLayout pifLl;
+    private LinearLayout pifLl;
+
+    private PersonInfo personInfo;
+    private TextView nameTv,sexTv,statusTv,sfzTv;
+    private ImageView headIv;
+
+    private final int SUCCEED_PHOTO=10000;
+    private final int  PROBLEM=10002;
+
+    private Handler mHandler=new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what){
+
+                case SUCCEED_PHOTO:
+
+                    headIv.setImageBitmap((Bitmap)msg.obj);
+
+                    break;
+
+                case PROBLEM:
+                    Toast.makeText(mContext,"网络不给力",Toast.LENGTH_SHORT).show();
+
+                    break;
+
+            }
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_info);
+
+        personInfo=(PersonInfo)getIntent().getSerializableExtra("personInfos");//从ShiwuyeDetailActivity传过来的
 
         if(mFragments==null) {
 
@@ -62,13 +110,25 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
         mFragments.add(new FamilyInfoFragment());
         mFragments.add(new PersonReFragment());
         mFragments.add(new ServiceReFramgent());
-        mFragments.add(new EduInfoFragment());
+        mFragments.add(new EduInfoFragment(personInfo.getSFZ()));
 
     }
 
 
     private void initView(){
 
+        nameTv= (TextView) findViewById(R.id.tv_person_info_name);
+        sexTv= (TextView) findViewById(R.id.tv_person_info_sex);
+        statusTv= (TextView) findViewById(R.id.tv_person_info_status);
+        sfzTv= (TextView) findViewById(R.id.tv_person_info_sfz);
+        headIv= (ImageView) findViewById(R.id.iv_person_info_head);
+
+        if(personInfo!=null) {
+            nameTv.setText(personInfo.getNAME());
+            sexTv.setText(personInfo.getSEX());
+            statusTv.setText(personInfo.getTYPE());
+            sfzTv.setText(personInfo.getSFZ());
+        }
         pifLl= (LinearLayout) findViewById(R.id.ll_person_info_pif);
 
         xiugaiIv= (ImageView) findViewById(R.id.iv_person_info_modify);
@@ -88,7 +148,8 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
         mViewPager.setAdapter(adapter);
 
         mViewPager.setOffscreenPageLimit(5);
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
 
             @Override
             public void onPageScrolled(int position,float positionOffset, int positionOffsetPixels) {
@@ -147,6 +208,49 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
                 }
             }
         });
+
+        getHeadPhoto();
+
+    }
+
+    //获得头像图片
+    private void getHeadPhoto(){
+
+        new Thread(
+
+                new Runnable() {
+                    @Override
+                    public void run() {
+//http://web.youli.pw:89/Web/Personal/windows/ShowPic.aspx?sfz=422201197209204223 头像
+                        String urlHead= MyOkHttpUtils.BaseUrl+"/Web/Personal/windows/ShowPic.aspx?sfz="+personInfo.getSFZ();
+
+                        Response response=MyOkHttpUtils.okHttpGet(urlHead);
+
+                        Message msg=Message.obtain();
+
+                        if(response!=null){
+
+                            InputStream is=response.body().byteStream();
+
+                            byte [] picData= IOUtil.getBytesByStream(is);
+
+                            Bitmap bp= BitmapFactory.decodeByteArray(picData,0,picData.length);
+
+                            msg.obj=bp;
+                            msg.what=SUCCEED_PHOTO;
+                            mHandler.sendMessage(msg);
+
+                        }else{
+
+                            msg.what=PROBLEM;
+                            mHandler.sendMessage(msg);
+
+                        }
+
+                    }
+                }
+
+        ).start();
 
     }
 

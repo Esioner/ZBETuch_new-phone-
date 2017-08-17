@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.youli.zbetuch.jingan"
-    android:versionName="版本日期：2017-07-03 \n新增高校专项调查">
+          package="com.youli.zbetuch.jingan"
+          android:versionName="版本日期：2017-07-03 \n新增高校专项调查">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".utils.MyApplication"
         android:allowBackup="true"
@@ -18,8 +19,8 @@
             android:launchMode="singleTask"
            >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
@@ -47,6 +48,7 @@
            ></activity>
         <activity android:name=".activity.PersonalInfoQueryResult"
            ></activity>
+
     </application>
 
 </manifest>
