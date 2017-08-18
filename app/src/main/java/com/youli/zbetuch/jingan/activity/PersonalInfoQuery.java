@@ -147,7 +147,7 @@ public class PersonalInfoQuery extends BaseActivity implements View.OnClickListe
                                         .simple_spinner_dropdown_item);
                                 spinner_country.setAdapter(regionArrayAdapter);
                                 if (spinner_country.getAdapter().getCount() > 1) {
-                                    spinner_country.setSelection(1);
+                                    spinner_country.setSelection(6);
                                 }
                                 //然后刷新 街道
                                 refreshStreet();
@@ -202,7 +202,7 @@ public class PersonalInfoQuery extends BaseActivity implements View.OnClickListe
     //刷新居委会列表
     private void refreshCommittee() {
         String streetId = null;
-        if (streetList != null && streetList.size() > 2) {
+        if (streetList != null && streetList.size() > 2&&spinner_street.getSelectedItemPosition()!=-1) {
             streetId = streetList.get(spinner_street.getSelectedItemPosition()).getId();
             final String committeeUrl = MyOkHttpUtils.BaseUrl + "/Json/Get_Area.aspx?COMMITTEE=" +
                     streetId;

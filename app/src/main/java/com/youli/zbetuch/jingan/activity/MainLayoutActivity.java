@@ -60,6 +60,7 @@ public class MainLayoutActivity extends BaseActivity implements View.OnClickList
 
     public static String adminName;
 
+    public static int adminId;
 
     private Handler mHandler=new Handler(){
 
@@ -72,6 +73,7 @@ public class MainLayoutActivity extends BaseActivity implements View.OnClickList
 
                     nameTv.setText(((GetStaffInfo)msg.obj).getNAME());
                     adminName=nameTv.getText().toString().trim();
+                    adminId=((GetStaffInfo)msg.obj).getID();
                     break;
 
                 case SUCCEED_PIC:

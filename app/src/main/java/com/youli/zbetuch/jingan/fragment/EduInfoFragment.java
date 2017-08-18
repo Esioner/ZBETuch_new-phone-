@@ -152,9 +152,9 @@ public class EduInfoFragment extends Fragment{
                 TextView major=holder.getView(R.id.tv_item_fmt_education_info_major);
                 major.setText(item.getSPECIALTY());
                 TextView startTime=holder.getView(R.id.tv_item_fmt_education_info_starttime);
-                startTime.setText(item.getSTART_DATE());
+                startTime.setText(item.getSTART_DATE().split("T")[0]);
                 TextView endTime=holder.getView(R.id.tv_item_fmt_education_info_endtime);
-                endTime.setText(item.getEND_DATE());
+                endTime.setText(item.getEND_DATE().split("T")[0]);
             }
         };
 

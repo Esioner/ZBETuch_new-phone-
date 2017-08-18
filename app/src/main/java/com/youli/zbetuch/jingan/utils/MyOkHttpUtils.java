@@ -101,6 +101,7 @@ public class MyOkHttpUtils {
         return response;
     }
 
+    //失业无业的调查提交
     public static Response okHttpPost(String url,String ID,String DQYX,String MQZK,String DATE,String MARK){
         getInstance();
         String cookies = SharedPreferencesUtils.getString("cookies");
@@ -119,6 +120,57 @@ public class MyOkHttpUtils {
             return  null;
         }
     return  response;
+    }
+
+    //服务记录的新增（ServiceReFramgent）
+//    http://web.youli.pw:89/Json/Set_Sfz_Service.aspx?ID=0&SFZ=310108198004026642
+//            &STAFF=2&SERVICE_TIME=2017-8-18&TYPE=1&MARK=测试
+    public static Response okHttpPost(String url,String ID,String SFZ,String STAFF,String SERVICE_TIME,String TYPE,String MARK){
+
+        getInstance();
+        String cookies= SharedPreferencesUtils.getString("cookies");
+        RequestBody requestBody=new FormBody.Builder().add("ID",ID)
+                .add("SFZ",SFZ).add("STAFF",STAFF).add("SERVICE_TIME",SERVICE_TIME)
+                .add("TYPE",TYPE).add("MARK",MARK).build();
+
+        Request request=new Request.Builder().url(url)
+        .post(requestBody).addHeader("cookie",cookies).build();
+        Response response;
+
+        try {
+            response=okHttpClient.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return response;
+    }
+
+//服务记录的删除
+    //http://web.youli.pw:89/Json/Set_Sfz_Service.aspx?ID=52&del=true
+
+    public static Response okHttpPostDelServiceRe(String url,String ID,String del){
+
+        getInstance();
+        String cookies=SharedPreferencesUtils.getString("cookies");
+        RequestBody requestBody=new FormBody.Builder().add("ID",ID)
+                .add("del",del).build();
+
+        Request request=new Request.Builder().url(url).post(requestBody)
+                .addHeader("cookie",cookies).build();
+
+        Response response;
+
+        try {
+            response=okHttpClient.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+
+        return response;
     }
 
     //异步Get

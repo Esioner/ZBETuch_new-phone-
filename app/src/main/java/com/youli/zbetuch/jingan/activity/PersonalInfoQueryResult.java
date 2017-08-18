@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -91,6 +92,16 @@ public class PersonalInfoQueryResult extends BaseActivity {
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                // Toast.makeText(mContext, "上拉加载", Toast.LENGTH_SHORT).show();
                 loadMore();
+
+            }
+        });
+
+        lv_personalInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent=new Intent(mContext,PersonInfoActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -240,12 +251,17 @@ public class PersonalInfoQueryResult extends BaseActivity {
             viewHolder.tv_birth_date.setText(birthDate);
             viewHolder.tv_type.setText(personalInfoBean.getType());
             viewHolder.tv_situation.setText(personalInfoBean.getCurrentSituation());
-
             if (position % 2 == 0) {
-                convertView.setBackgroundResource(R.color.skyBlue);
+                convertView.setBackgroundResource(R.drawable.selector_ziyuandiaocha_item1);
             } else if (position % 2 != 0) {
-                convertView.setBackgroundResource(R.color.white);
+                convertView.setBackgroundResource(R.drawable.selector_ziyuandiaocha_item2);
             }
+
+//            if (position % 2 == 0) {
+//                convertView.setBackgroundResource(R.color.skyBlue);
+//            } else if (position % 2 != 0) {
+//                convertView.setBackgroundResource(R.color.white);
+//            }
             return convertView;
         }
 
