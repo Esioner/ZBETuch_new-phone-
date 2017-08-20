@@ -36,6 +36,7 @@ public class EduInfoFragment extends Fragment{
 
     private String sfzStr;
 
+
     public EduInfoFragment(String sfzStr) {
         this.sfzStr = sfzStr;
     }
@@ -81,9 +82,9 @@ public class EduInfoFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         contentView=LayoutInflater.from(getContext()).inflate(R.layout.framgment_education_info,container,false);
-
-        initView(contentView);
-
+        if(getSfzStr()!=null) {
+            initView(contentView);
+        }
         return contentView;
     }
 

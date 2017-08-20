@@ -106,11 +106,21 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
     private void initData(){
 
         mFragments=new ArrayList<Fragment>();
-        mFragments.add(new PersonInfoFragment());
-        mFragments.add(new FamilyInfoFragment(personInfo.getSFZ()));
-        mFragments.add(new PersonReFragment());
-        mFragments.add(new ServiceReFramgent(personInfo.getSFZ()));
-        mFragments.add(new EduInfoFragment(personInfo.getSFZ()));
+
+        if(personInfo==null){
+            mFragments.add(new PersonInfoFragment());
+            mFragments.add(new FamilyInfoFragment(null));
+            mFragments.add(new PersonReFragment());
+            mFragments.add(new ServiceReFramgent(null));
+            mFragments.add(new EduInfoFragment(null));
+        }else{
+            mFragments.add(new PersonInfoFragment());
+            mFragments.add(new FamilyInfoFragment(personInfo.getSFZ()));
+            mFragments.add(new PersonReFragment());
+            mFragments.add(new ServiceReFramgent(personInfo.getSFZ()));
+            mFragments.add(new EduInfoFragment(personInfo.getSFZ()));
+        }
+
 
     }
 
@@ -209,8 +219,10 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
             }
         });
 
-        getHeadPhoto();
 
+        if(personInfo!=null) {
+            getHeadPhoto();
+        }
     }
 
     //获得头像图片
@@ -287,7 +299,7 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
 
                 Intent mIntent=new Intent(this,MainLayoutActivity.class);
                 startActivity(mIntent);
-
+                finish();
                 break;
 
             case R.id.btn_person_info_follow:

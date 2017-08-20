@@ -47,6 +47,8 @@ public class ServiceReFramgent extends Fragment {
 
     private String sfz;
 
+
+
     public ServiceReFramgent(String sfz) {
         this.sfz = sfz;
     }
@@ -173,8 +175,9 @@ public class ServiceReFramgent extends Fragment {
 
         contentview = LayoutInflater.from(getContext()).inflate(R.layout.framgment_service_record, container, false);
 
-        initView(contentview);
-
+        if(getSfz()!=null) {
+            initView(contentview);
+        }
         return contentview;
     }
 

@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/detail_title_bg">
 
         <TextView
@@ -24,6 +24,8 @@
             android:layout_height="50dp"
             android:background="@drawable/selector_main_layout_work_btn"
             />
+
+
     </RelativeLayout>
 
     <LinearLayout

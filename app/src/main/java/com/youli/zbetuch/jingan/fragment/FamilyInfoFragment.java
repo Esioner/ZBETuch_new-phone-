@@ -100,9 +100,9 @@ public class FamilyInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         contentView = LayoutInflater.from(getContext()).inflate(R.layout.framgment_family_info, container, false);
 
-
-        initView(contentView);
-
+          if(getSfz()!=null) {
+              initView(contentView);
+          }
         return contentView;
 
     }
