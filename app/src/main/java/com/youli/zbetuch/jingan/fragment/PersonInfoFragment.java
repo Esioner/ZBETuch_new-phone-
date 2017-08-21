@@ -3,6 +3,8 @@ package com.youli.zbetuch.jingan.fragment;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +15,31 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.youli.zbetuch.jingan.R;
+import com.youli.zbetuch.jingan.activity.LoginActivity;
 import com.youli.zbetuch.jingan.entity.PersonInfo;
+import com.youli.zbetuch.jingan.entity.StaffMarkInfo;
+import com.youli.zbetuch.jingan.utils.MyOkHttpUtils;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import okhttp3.Response;
 
 /**
  * Created by ZHengBin on 2017/8/12.
  */
 
 public class PersonInfoFragment extends Fragment implements View.OnClickListener{
+
+    private final int SUCCEED=10000;
+    private final int  PROBLEM=10001;
 
     private PersonInfo pInfo;
 
@@ -51,6 +66,41 @@ public class PersonInfoFragment extends Fragment implements View.OnClickListener
             sfzTv,currIntTv,eduTv,mdTv,jdTv,jwhTv,hujiTv,phoneTv,juzhuTv,
             markTv,upDateTimeTv;
 
+    private List<StaffMarkInfo> markData=new ArrayList<>();
+
+    private Handler mHandler=new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what){
+
+                case SUCCEED:
+
+                    markData.addAll(( List<StaffMarkInfo>)msg.obj);
+
+                    for(StaffMarkInfo info : markData){
+
+                        TextView tv=new TextView(getActivity());
+            tv.setText(info.getType_Name());
+            LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            tv.setLayoutParams(lp);
+            tv.setPadding(0,0,10,0);
+            tv.setTextSize(16);
+            markLl.addView(tv);
+
+                    }
+
+                    break;
+
+                case PROBLEM:
+
+                    Toast.makeText(getActivity(),"网络不给力",Toast.LENGTH_SHORT).show();
+                    break;
+            }
+
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
@@ -130,17 +180,52 @@ public class PersonInfoFragment extends Fragment implements View.OnClickListener
          xjryIv= (ImageView) view.findViewById(R.id.iv_person_info_xjry);
         xjryIv.setOnClickListener(this);
 
-        for(int i=0;i<5;i++){
-
-            TextView tv=new TextView(getActivity());
-            tv.setText("我是测试"+i);
-            LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            tv.setLayoutParams(lp);
-            tv.setPadding(0,0,10,0);
-            tv.setTextSize(16);
-            markLl.addView(tv);
-        }
         //专项标识的URL：http://web.youli.pw:89/Json/Get_TB_Staff_Marks.aspx?sfz=310108198004026642
+
+        getMarksInfo();
+    }
+
+    private void getMarksInfo(){
+
+        new Thread(
+
+                new Runnable() {
+                    @Override
+                    public void run() {
+
+                        String markUrl= MyOkHttpUtils.BaseUrl+"/Json/Get_TB_Staff_Marks.aspx?sfz="+getpInfo().getSFZ();
+
+                        Response response=MyOkHttpUtils.okHttpGet(markUrl);
+
+                        Message  msg=Message.obtain();
+
+                        if(response!=null){
+
+                            try {
+                                String resStr=response.body().string();
+
+                                Gson gson=new Gson();
+
+                                msg.what=SUCCEED;
+                                msg.obj=gson.fromJson(resStr,new TypeToken<List<StaffMarkInfo>>(){}.getType());
+                                mHandler.sendMessage(msg);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        }else{
+
+                            msg.what=PROBLEM;
+                            mHandler.sendMessage(msg);
+
+                        }
+
+                    }
+                }
+
+        ).start();
+
     }
 
     @Override
