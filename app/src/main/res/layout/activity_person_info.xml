@@ -19,12 +19,26 @@
             android:background="@drawable/selector_person_info_cehua_btn"
             />
 
-        <TextView
-            android:textColor="#ffffff"
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="社区就业服务e本通"/>
+            android:layout_height="match_parent"
+            >
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/wz"/>
+
+        </RelativeLayout>
+
+        <!--<TextView-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="社区就业服务e本通"/>-->
 
 
         <Button

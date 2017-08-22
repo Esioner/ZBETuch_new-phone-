@@ -68,7 +68,7 @@ public class PersonInfoFragment extends Fragment implements View.OnClickListener
     private Date date;
     private TextView nameTv,sexTv,birthdayTv,nationTv,jiguanTv,stateTv,
             sfzTv,currIntTv,eduTv,mdTv,jdTv,jwhTv,hujiTv,phoneTv,juzhuTv,
-            markTv,upDateTimeTv;
+            markTv,upDateTimeTv,overdueTv;
 
     private List<StaffMarkInfo> markData=new ArrayList<>();
     private List<MarkImgInfo> markImgData=new ArrayList<>();
@@ -169,6 +169,8 @@ public class PersonInfoFragment extends Fragment implements View.OnClickListener
         juzhuTv= (TextView) view.findViewById(R.id.tv_person_info_juzhu);
         markTv= (TextView) view.findViewById(R.id.tv_person_info_mark);
         upDateTimeTv= (TextView) view.findViewById(R.id.tv_person_info_update_time);
+        overdueTv= (TextView) view.findViewById(R.id.tv_person_info_overdue);
+        overdueTv.setVisibility(View.GONE);
 
         markLl= (LinearLayout) view.findViewById(R.id.ll_person_special_mark);
 
@@ -189,6 +191,12 @@ public class PersonInfoFragment extends Fragment implements View.OnClickListener
         sexTv.setText(pInfo.getSEX());
         juzhuTv.setText(pInfo.getNOW_ROAD()+pInfo.getNOW_LANE()+pInfo.getNOW_NO()+pInfo.getNOW_ROOM());
         markTv.setText(pInfo.getRemark());
+
+        if(TextUtils.equals(pInfo.getCenter().getCOMPARE_RESULT(),"缺失")){
+            overdueTv.setVisibility(View.VISIBLE);
+        }else{
+            overdueTv.setVisibility(View.GONE);
+        }
 
 
         try {

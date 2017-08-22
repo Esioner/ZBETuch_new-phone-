@@ -25,6 +25,7 @@
         android:text="调查类型" />
 
     <TextView
+        android:paddingLeft="10dp"
         android:id="@+id/item_ziyuandiaocha_operator_tv"
         style="@style/resources_main_title"
         android:layout_weight="1"
@@ -37,14 +38,14 @@
         android:text="布置时间" />
 
     <TextView
-        android:paddingLeft="3dp"
+        android:paddingLeft="10dp"
         android:id="@+id/item_ziyuandiaocha_needNum_tv"
         style="@style/resources_main_title"
         android:layout_weight="0.9"
         android:text="需查人数" />
 
     <TextView
-        android:paddingLeft="3dp"
+        android:paddingLeft="15dp"
         android:id="@+id/item_ziyuandiaocha_alreadyNum_tv"
         style="@style/resources_main_title"
         android:layout_weight="0.9"

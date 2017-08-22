@@ -3,17 +3,25 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scaleType="fitXY"
-        android:src="@drawable/title"/>
-
     <!--<ImageView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:src="@drawable/title"/>-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:src="@drawable/title"/>-->
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/detail_title_bg"
+        >
+        <ImageView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/wz"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

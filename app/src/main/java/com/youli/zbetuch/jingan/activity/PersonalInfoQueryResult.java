@@ -100,7 +100,10 @@ public class PersonalInfoQueryResult extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                Toast.makeText(mContext,"*********"+personalInfoList.get(position-1).getName(),Toast.LENGTH_SHORT).show();
+
                 Intent intent=new Intent(mContext,PersonInfoActivity.class);
+                intent.putExtra("mySFZ",personalInfoList.get(position-1).getSfz());
                 startActivity(intent);
 
             }
@@ -148,6 +151,9 @@ public class PersonalInfoQueryResult extends BaseActivity {
     }
 
     private void loadDates(final String url) {
+
+        Log.e("2017/8/22","===url==="+url);
+
         new Thread(new Runnable() {
             @Override
             public void run() {

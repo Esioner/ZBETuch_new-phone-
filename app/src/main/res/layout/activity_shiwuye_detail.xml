@@ -5,8 +5,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:background="@drawable/detail_title_bg">
+
+        <ImageView
+            android:paddingLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/wz"/>
 
         <TextView
             android:id="@+id/shiwuye_detail_title_tv"
@@ -14,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
+            android:layout_marginRight="10dp"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 

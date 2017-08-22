@@ -10,7 +10,15 @@
         android:layout_height="wrap_content"
         android:background="@drawable/detail_title_bg">
 
+        <ImageView
+            android:paddingLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/wz"/>
+
         <TextView
+            android:visibility="gone"
             android:layout_centerInParent="true"
             android:textColor="#ffffff"
             android:layout_width="wrap_content"

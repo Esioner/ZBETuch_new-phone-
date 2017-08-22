@@ -61,9 +61,14 @@ public class FunctionListActivity extends BaseActivity{
                                             PersonalInfoQuery.class);
                                     startActivity(intent);
                                     break;
-                                case 4:
-                                    Intent intent1=new Intent(mContext,ZiyuandiaochaActivity.class);
+                                case 1:
+                                    Intent intent1 = new Intent(mContext,
+                                            RecruitInfoActivity.class);
                                     startActivity(intent1);
+                                    break;
+                                case 4:
+                                    Intent intent2=new Intent(mContext,ZiyuandiaochaActivity.class);
+                                    startActivity(intent2);
                                     break;
 //                                default:
 //                                    Toast.makeText(FunctionListActivity.this, "当前点击第" + finalI

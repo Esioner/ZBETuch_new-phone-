@@ -49,6 +49,9 @@
         <activity android:name=".activity.PersonalInfoQueryResult"
            ></activity>
 
+        <activity android:name=".activity.RecruitInfoActivity"
+            ></activity>
+
     </application>
 
 </manifest>

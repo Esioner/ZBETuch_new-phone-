@@ -60,6 +60,7 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
     private LinearLayout pifLl;
 
     private PersonInfo personInfo;
+    private String personSFZ;
     private TextView nameTv,sexTv,statusTv,sfzTv;
     private ImageView headIv;
 
@@ -106,7 +107,7 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
         setContentView(R.layout.activity_person_info);
 
         personInfo=(PersonInfo)getIntent().getSerializableExtra("personInfos");//从ShiwuyeDetailActivity传过来的
-
+        personSFZ=getIntent().getStringExtra("mySFZ");//从PersonalInfoQueryResult传过来的
         if(mFragments==null) {
 
             initData();
@@ -119,19 +120,31 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
 
         mFragments=new ArrayList<Fragment>();
 
-        if(personInfo==null){
-            mFragments.add(new PersonInfoFragment(null));
-            mFragments.add(new FamilyInfoFragment(null));
-            mFragments.add(new PersonReFragment(null));
-            mFragments.add(new ServiceReFramgent(null));
-            mFragments.add(new EduInfoFragment(null));
-        }else{
+        if(personInfo!=null){
             mFragments.add(new PersonInfoFragment(personInfo));
             mFragments.add(new FamilyInfoFragment(personInfo.getSFZ()));
             mFragments.add(new PersonReFragment(personInfo.getSFZ()));
             mFragments.add(new ServiceReFramgent(personInfo.getSFZ()));
             mFragments.add(new EduInfoFragment(personInfo.getSFZ()));
+        }else if(personSFZ!=null){
+
+            mFragments.add(new PersonInfoFragment(null));
+            mFragments.add(new FamilyInfoFragment(personSFZ));
+            mFragments.add(new PersonReFragment(personSFZ));
+            mFragments.add(new ServiceReFramgent(personSFZ));
+            mFragments.add(new EduInfoFragment(personSFZ));
+
         }
+//
+//        if(personInfo==null){
+//            mFragments.add(new PersonInfoFragment(null));
+//            mFragments.add(new FamilyInfoFragment(null));
+//            mFragments.add(new PersonReFragment(null));
+//            mFragments.add(new ServiceReFramgent(null));
+//            mFragments.add(new EduInfoFragment(null));
+//        }else{
+//
+//        }
 
 
     }
@@ -210,6 +223,7 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+
                 switch (checkedId){
 
                     case R.id.rb_person_info:
@@ -381,7 +395,27 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(PersonInfoActivity.this,"确定",Toast.LENGTH_SHORT).show();
+
+                switch (mRadioGroup.getCheckedRadioButtonId()){
+
+                    case R.id.rb_person_info:
+                        Toast.makeText(PersonInfoActivity.this,"基本信息",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.rb_family_info:
+                        Toast.makeText(PersonInfoActivity.this,"家庭信息",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.rb_person_resume:
+                        Toast.makeText(PersonInfoActivity.this,"个人简历",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.rb_service_record:
+                        Toast.makeText(PersonInfoActivity.this,"服务记录",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.rb_edu_info:
+                        Toast.makeText(PersonInfoActivity.this,"教育信息",Toast.LENGTH_SHORT).show();
+                        break;
+
+                }
+
             }
         });
 
