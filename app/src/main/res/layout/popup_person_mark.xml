@@ -12,50 +12,47 @@
         >
 
         <TextView
-            android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:text="标识名称:" />
 
         <TextView
-            android:id="@+id/markname"
+            android:id="@+id/tv_markname_popup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
             android:textColor="@android:color/black"
             android:text="应届毕业生" />
 
         <TextView
-            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
             android:textColor="@android:color/black"
             android:text="来 源:" />
 
         <TextView
-            android:id="@+id/marksource"
+            android:id="@+id/tv_marksource_popup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
             android:textColor="@android:color/black"
             android:text="现场采集" />
 
         <TextView
-            android:layout_marginLeft="5dp"
-            android:id="@+id/textView5"
+            android:layout_marginLeft="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:text="创建时间:" />
 
         <TextView
-            android:id="@+id/marktime"
+            android:id="@+id/tv_marktime_popup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
             android:text="2017-08-18" />
 
     </LinearLayout>

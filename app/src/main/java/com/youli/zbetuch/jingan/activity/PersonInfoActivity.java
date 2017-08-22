@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -63,6 +64,7 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
     private ImageView headIv;
 
     private final int SUCCEED_PHOTO=10000;
+    private final int SUCCEED_FOLLOW=10001;
     private final int  PROBLEM=10002;
 
     private Handler mHandler=new Handler(){
@@ -75,6 +77,16 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
                 case SUCCEED_PHOTO:
 
                     headIv.setImageBitmap((Bitmap)msg.obj);
+
+                    break;
+
+                case SUCCEED_FOLLOW:
+
+                    if(TextUtils.equals((String)msg.obj,"True")){
+                        Toast.makeText(mContext, "添加成功", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(mContext, "已经添加过", Toast.LENGTH_SHORT).show();
+                    }
 
                     break;
 
@@ -304,7 +316,7 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
 
             case R.id.btn_person_info_follow:
 
-                Toast.makeText(this,"关注",Toast.LENGTH_SHORT).show();
+                addFollow();
 
                 break;
 
@@ -315,6 +327,48 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
                 break;
         }
 
+
+    }
+
+    //添加关注
+    private void addFollow(){
+
+       // http://web.youli.pw:89/Json/Set_Attention.aspx?sfz=310108198004026642&type=0&name=储明净静
+
+        new Thread(
+
+                new Runnable() {
+                    @Override
+                    public void run() {
+
+                        String urlFollow=MyOkHttpUtils.BaseUrl+"/Json/Set_Attention.aspx?sfz="+personInfo.getSFZ()+"&type=0&name="+personInfo.getNAME();
+
+                        Response response=MyOkHttpUtils.okHttpGet(urlFollow);
+
+                        Message msg=Message.obtain();
+
+                        if(response!=null){
+
+                            try {
+                                String resStr=response.body().string();
+
+                                msg.what=SUCCEED_FOLLOW;
+                                msg.obj=resStr;
+                                mHandler.sendMessage(msg);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        }else{
+                            msg.what=PROBLEM;
+                            mHandler.sendMessage(msg);
+                        }
+
+                    }
+                }
+
+        ).start();
 
     }
 

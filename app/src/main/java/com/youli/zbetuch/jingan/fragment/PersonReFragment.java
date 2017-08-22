@@ -68,32 +68,33 @@ public class PersonReFragment extends Fragment{
                 case SUCCESS:
 
                     data.addAll((List<PersonReInfo> )msg.obj);
-        workNatureTv.setText(data.get(0).getGZXZNAME());
-        workClassTv.setText(data.get(0).getGZBSNAME());
-        workAreaOneTv.setText(data.get(0).getAREAID_1());
-        workAreaTwoTv.setText(data.get(0).getAREAID_2());
-        workAreaThreeTv.setText(data.get(0).getAREAID_3());
-        wantWorkOneTv.setText(data.get(0).getZYFLID_1());
-        wantWorkOneDetailTv.setText(data.get(0).getZYFLCHILDID_1());
-        wantWorkTwoTv.setText(data.get(0).getZYFLID_2());
-        wantWorkTwoDetailTv.setText(data.get(0).getZYFLCHILDID_2());
-        wantWorkThreeTv.setText(data.get(0).getOTHERZYFL());
-                    if(data.get(0).getENDSALARY()==-1){
-                        wantSalaryTv.setText(data.get(0).getSTARTSALARY()+"及以上");
-                    }else{
-                        wantSalaryTv.setText(data.get(0).getSTARTSALARY()+"-"+data.get(0).getENDSALARY());
+                    if(data.size()!=0) {
+                        workNatureTv.setText(data.get(0).getGZXZNAME());
+                        workClassTv.setText(data.get(0).getGZBSNAME());
+                        workAreaOneTv.setText(data.get(0).getAREAID_1());
+                        workAreaTwoTv.setText(data.get(0).getAREAID_2());
+                        workAreaThreeTv.setText(data.get(0).getAREAID_3());
+                        wantWorkOneTv.setText(data.get(0).getZYFLID_1());
+                        wantWorkOneDetailTv.setText(data.get(0).getZYFLCHILDID_1());
+                        wantWorkTwoTv.setText(data.get(0).getZYFLID_2());
+                        wantWorkTwoDetailTv.setText(data.get(0).getZYFLCHILDID_2());
+                        wantWorkThreeTv.setText(data.get(0).getOTHERZYFL());
+                        if (data.get(0).getENDSALARY() == -1) {
+                            wantSalaryTv.setText(data.get(0).getSTARTSALARY() + "及以上");
+                        } else {
+                            wantSalaryTv.setText(data.get(0).getSTARTSALARY() + "-" + data.get(0).getENDSALARY());
+                        }
+
+                        computerLevelTv.setText(data.get(0).getCOMPUTERLEVELID());
+                        computerCertTv.setText(data.get(0).getCOMPUTERCERT());
+                        languageOneTv.setText(data.get(0).getLANGUAGEID_1());
+                        languageProfOneTv.setText(data.get(0).getLANGUAGEPROFICIENCYID_1());
+                        languageTwoTv.setText(data.get(0).getLANGUAGEID_2());
+                        languageProfTwoTv.setText(data.get(0).getLANGUAGEPROFICIENCYID_2());
+                        languageCertTv.setText(data.get(0).getLANGUAGECERT());
+                        otherCertsTv.setText(data.get(0).getOTHERCERTS());
+                        selfEvaluationTv.setText(data.get(0).getSELFEVALUATION());
                     }
-
-        computerLevelTv.setText(data.get(0).getCOMPUTERLEVELID());
-        computerCertTv.setText(data.get(0).getCOMPUTERCERT());
-        languageOneTv.setText(data.get(0).getLANGUAGEID_1());
-        languageProfOneTv.setText(data.get(0).getLANGUAGEPROFICIENCYID_1());
-        languageTwoTv.setText(data.get(0).getLANGUAGEID_2());
-        languageProfTwoTv.setText(data.get(0).getLANGUAGEPROFICIENCYID_2());
-        languageCertTv.setText(data.get(0).getLANGUAGECERT());
-        otherCertsTv.setText(data.get(0).getOTHERCERTS());
-        selfEvaluationTv.setText(data.get(0).getSELFEVALUATION());
-
 
                     break;
 

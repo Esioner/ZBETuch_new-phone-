@@ -466,41 +466,47 @@
                 android:layout_marginLeft="10dp"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
-                android:src="@drawable/yingjiebiyesheng"/>
+                android:src="@drawable/yingjiebiyesheng"
+                android:visibility="gone"/>
             <ImageView
                 android:id="@+id/iv_person_info_jdry"
                 android:layout_marginLeft="10dp"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
-                android:src="@drawable/jiedurenyuan"/>
+                android:src="@drawable/jiedurenyuan"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/iv_person_info_jykn"
                 android:layout_marginLeft="10dp"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
-                android:src="@drawable/jiuyekunnan"/>
+                android:src="@drawable/jiuyekunnan"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/iv_person_info_qhry"
                 android:layout_marginLeft="10dp"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
-                android:src="@drawable/qihangrenyuan"/>
+                android:src="@drawable/qihangrenyuan"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/iv_person_info_wjyj"
                 android:layout_marginLeft="10dp"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
-                android:src="@drawable/nonejiuyefanily"/>
+                android:src="@drawable/nonejiuyefanily"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/iv_person_info_xjry"
                 android:layout_marginLeft="10dp"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
-                android:src="@drawable/xingjierenyuan"/>
+                android:src="@drawable/xingjierenyuan"
+                android:visibility="gone"/>
 
 
         </LinearLayout>
@@ -565,7 +571,7 @@ android:scrollbars="none">
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="备       注:"/>
+                android:text="备        注:"/>
 
             <TextView
                 android:id="@+id/tv_person_info_mark"
