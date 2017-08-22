@@ -14,7 +14,7 @@
             android:id="@+id/item_ziyuan_detail_num_tv"
             style="@style/gradeate_list_titletext"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:gravity="center"
 
             />
@@ -22,7 +22,7 @@
         android:id="@+id/item_ziyuan_detail_name_tv"
         style="@style/gradeate_list_titletext"
         android:layout_width="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="1.8"
         android:gravity="center"
          />
 
@@ -30,7 +30,7 @@
         android:id="@+id/item_ziyuan_detail_idcard_tv"
         style="@style/gradeate_list_titletext"
         android:layout_width="0dp"
-        android:layout_weight="5.5"
+        android:layout_weight="5.3"
         android:gravity="center"
         />
 

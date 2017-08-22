@@ -57,31 +57,96 @@
             android:src="@drawable/personhead"/>
 
         <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_centerVertical="true"
+            android:id="@+id/main_layout_ll_name"
+
             android:layout_toRightOf="@id/main_layout_head_iv"
-            android:id="@+id/main_layout_position_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_margin="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="昵称"
+               />
+
             <TextView
                 android:layout_margin="5dp"
                 android:id="@+id/main_layout_name_tv"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="工作菜单"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"/>
+
+            />
+
+            </LinearLayout>
+        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/main_layout_ll_email"
+        android:layout_below="@id/main_layout_ll_name"
+
+        android:layout_toRightOf="@id/main_layout_head_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:background="@color/white"
                 android:layout_margin="5dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="工作菜单"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"/>
+                android:text="电子邮箱"
+                />
+
+            <TextView
+                android:layout_margin="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="2381447237@qq.com"
+                />
+
         </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@id/main_layout_ll_email"
+        android:layout_toRightOf="@id/main_layout_head_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系电话"
+                />
+
+            <TextView
+                android:layout_margin="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="13120601125"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
 
 
