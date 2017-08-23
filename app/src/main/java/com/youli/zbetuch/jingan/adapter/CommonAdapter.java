@@ -22,10 +22,16 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     protected final int mItemLayoutId;
 
     public CommonAdapter(Context context,List<T> mDatas,int itemLayoutId){
-        mInflater=LayoutInflater.from(context);
+
         this.mContext=context;
         this.mDatas=mDatas;
         this.mItemLayoutId=itemLayoutId;
+
+        if(context!=null){
+            mInflater=LayoutInflater.from(context);
+        }
+
+
     }
 
     @Override

@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <!--防止屏幕旋转变形，锁定竖屏-->
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.JobInfoListActivity"
             android:launchMode="singleTask"
            >
             <intent-filter>
@@ -50,6 +50,10 @@
            ></activity>
 
         <activity android:name=".activity.RecruitInfoActivity"
+            android:windowSoftInputMode="stateHidden"
+            ></activity>
+
+        <activity android:name=".activity.LoginActivity"
             ></activity>
 
     </application>
