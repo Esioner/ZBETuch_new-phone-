@@ -26,6 +26,9 @@ public class JobInfoListInfo {
     private float endsalary;//月薪上限
     private String modifydate;//更新时间
 
+
+    public JobInfoListInfo(){}
+
     public JobInfoListInfo(String comname, String jobname, String jobno, String eduname, int startage, int endage, int recruitnums, float startsalary, float endsalary, String modifydate) {
         this.comname = comname;
         this.jobname = jobname;
@@ -141,5 +144,11 @@ public class JobInfoListInfo {
 
     public void setStartsalary(float startsalary) {
         this.startsalary = startsalary;
+    }
+
+    @Override
+    public String toString() {
+        return
+              comname ;
     }
 }

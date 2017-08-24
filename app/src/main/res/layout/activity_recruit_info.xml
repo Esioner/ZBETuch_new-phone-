@@ -94,9 +94,12 @@
                     android:layout_height="wrap_content"
                     android:text="单位性质:"/>
 
-                <EditText
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:spinnerMode="dialog"
+                    android:id="@+id/sp_recruit_info_company_nature"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="33dp"
                     android:layout_weight="1"/>
 
                 <TextView
@@ -139,9 +142,12 @@
                     android:layout_height="wrap_content"
                     android:text="或(常见工种):"/>
 
-                <EditText
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:spinnerMode="dialog"
+                    android:id="@+id/sp_recruit_info_common_work"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="33dp"
                     android:layout_weight="1"/>
 
             </LinearLayout>
@@ -184,9 +190,12 @@
                     android:layout_height="wrap_content"
                     android:text="文化程度:"/>
 
-                <EditText
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:spinnerMode="dialog"
+                    android:id="@+id/sp_recruit_info_edu"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="33dp"
                     android:layout_weight="1"/>
 
             </LinearLayout>
@@ -266,9 +275,12 @@
                     android:layout_height="wrap_content"
                     android:text="大类:"/>
 
-                <EditText
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:spinnerMode="dialog"
+                    android:id="@+id/sp_recruit_info_industry_big"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="33dp"
                     android:layout_weight="1"/>
 
                 <TextView
@@ -276,9 +288,12 @@
                     android:layout_height="wrap_content"
                     android:text="小类:"/>
 
-                <EditText
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:spinnerMode="dialog"
+                    android:id="@+id/sp_recruit_info_industry_small"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="33dp"
                     android:layout_weight="1"/>
 
             </LinearLayout>
@@ -321,20 +336,26 @@
                     android:layout_height="wrap_content"
                     android:text="大类:"/>
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                           <Spinner
+                               android:background="@drawable/spinner_bg"
+                               android:spinnerMode="dialog"
+                               android:id="@+id/sp_recruit_info_occupation_big"
+                               android:layout_width="0dp"
+                               android:layout_height="33dp"
+                               android:layout_weight="1"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="小类:"/>
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                           <Spinner
+                               android:background="@drawable/spinner_bg"
+                               android:spinnerMode="dialog"
+                               android:id="@+id/sp_recruit_info_occupation_small"
+                               android:layout_width="0dp"
+                               android:layout_height="33dp"
+                               android:layout_weight="1"/>
 
             </LinearLayout>
 
@@ -357,9 +378,12 @@
                     android:layout_height="wrap_content"
                     android:text="工作性质:"/>
 
-                <EditText
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:spinnerMode="dialog"
+                    android:id="@+id/sp_recruit_info_work_nature"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="33dp"
                     android:layout_weight="1"/>
 
                 <TextView
@@ -367,9 +391,12 @@
                     android:layout_height="wrap_content"
                     android:text="工作班时:"/>
 
-                <EditText
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:spinnerMode="dialog"
+                    android:id="@+id/sp_recruit_info_work_class"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="33dp"
                     android:layout_weight="1"/>
 
             </LinearLayout>
@@ -392,28 +419,36 @@
                     android:layout_height="wrap_content"
                     android:text="工作地区:"/>
 
-                <EditText
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:spinnerMode="dialog"
+                    android:id="@+id/sp_recruit_info_work_area_one"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="或"/>
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="33dp"
                     android:layout_weight="1"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="或"/>
 
-                <EditText
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:spinnerMode="dialog"
+                    android:id="@+id/sp_recruit_info_work_area_two"
                     android:layout_width="0dp"
+                    android:layout_height="33dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="或"/>
+
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:spinnerMode="dialog"
+                    android:id="@+id/sp_recruit_info_work_area_three"
+                    android:layout_width="0dp"
+                    android:layout_height="33dp"
                     android:layout_weight="1"/>
             </LinearLayout>
 
@@ -444,12 +479,14 @@
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
                 <RadioGroup
+                    android:id="@+id/rg_recruit_info"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/rb_recruit_info1"
                         android:textSize="12sp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -457,24 +494,28 @@
                         android:text="无要求"/>
 
                     <RadioButton
+                        android:id="@+id/rb_recruit_info2"
                         android:textSize="12sp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.9"
                         android:text="当天"/>
                     <RadioButton
+                        android:id="@+id/rb_recruit_info3"
                         android:textSize="12sp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.1"
                         android:text="最近3天"/>
                     <RadioButton
+                        android:id="@+id/rb_recruit_info4"
                         android:textSize="12sp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
                         android:text="最近一周"/>
                     <RadioButton
+                        android:id="@+id/rb_recruit_info5"
                         android:textSize="12sp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -508,22 +549,26 @@
                 android:orientation="horizontal"
                 android:padding="5dp">
                 <CheckBox
+                    android:id="@+id/cb_recruit_info1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="直接面试"/>
 
                 <CheckBox
+                    android:id="@+id/cb_recruit_info2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="应届生"/>
                 <CheckBox
+                    android:id="@+id/cb_recruit_info3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="残疾人"/>
                 <CheckBox
+                    android:id="@+id/cb_recruit_info4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

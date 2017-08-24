@@ -35,17 +35,16 @@
 <com.youli.zbetuch.jingan.view.JobInfoHsv
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-<LinearLayout
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:orientation="vertical">
-
+<!--<LinearLayout-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:orientation="vertical">-->
 
     <com.youli.zbetuch.jingan.view.MyListView
         android:id="@+id/lv_job_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.youli.zbetuch.jingan.view.MyListView>
-</LinearLayout>
+<!--</LinearLayout>-->
 </com.youli.zbetuch.jingan.view.JobInfoHsv>
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
