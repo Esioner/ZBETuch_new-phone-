@@ -61,6 +61,7 @@
                     android:text="单位名称:"/>
 
                 <EditText
+                    android:id="@+id/et_recruit_info_company_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
@@ -108,6 +109,7 @@
                     android:text="岗位编号:"/>
 
                 <EditText
+                    android:id="@+id/et_recruit_info_job_no"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
@@ -133,6 +135,7 @@
                     android:text="岗位名称:"/>
 
                 <EditText
+                    android:id="@+id/et_recruit_info_job_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
@@ -171,6 +174,8 @@
                     android:text="月收入:"/>
 
                 <EditText
+                    android:inputType="number"
+                    android:id="@+id/et_recruit_info_income_start"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"/>
@@ -181,6 +186,8 @@
                     android:text="-"/>
 
                 <EditText
+                    android:inputType="number"
+                    android:id="@+id/et_recruit_info_income_end"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"/>
@@ -225,6 +232,8 @@
                     android:text="年龄:"/>
 
                 <EditText
+                    android:inputType="number"
+                    android:id="@+id/et_recruit_info_age"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>

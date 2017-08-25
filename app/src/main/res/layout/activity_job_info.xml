@@ -18,7 +18,7 @@
             android:layout_marginRight="10dip"
             android:textColor="@android:color/white"
             android:textSize="15sp"
-            android:text="共有数据100条"/>
+            />
 
     </RelativeLayout>
 

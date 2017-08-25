@@ -7,6 +7,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,7 @@ import okhttp3.Response;
 public class JobInfoListActivity extends BaseActivity{
 
     private Context mContext=this;
-    private final int SUCCEED=10000;
+    private final int SUCCEED_REFRESH=10000;
     private final int  PROBLEM=10001;
 
     private MyListView lv;
@@ -42,6 +43,9 @@ public class JobInfoListActivity extends BaseActivity{
     private List<JobInfoListInfo> jobInfoList=new ArrayList<>();
     private CommonAdapter commonAdapter;
     private PullToRefreshScrollView hsv;
+    private int PageIndex=0;
+    private String queryUrl;
+    private TextView rowNum;
 
     private Handler mHandler=new Handler(){
 
@@ -50,11 +54,14 @@ public class JobInfoListActivity extends BaseActivity{
 
              switch (msg.what){
 
-                 case SUCCEED:
+                 case SUCCEED_REFRESH:
 
-                     jobInfoList.clear();
-                    jobInfoList.addAll((List<JobInfoListInfo>)msg.obj);
+                            if(PageIndex==0) {
+                                jobInfoList.clear();
+                            }
 
+                     jobInfoList.addAll((List<JobInfoListInfo>)msg.obj);
+                     rowNum.setText("共有数据"+jobInfoList.get(0).getMax_row()+"条");
                      lvSetAdapter(jobInfoList);
 
 
@@ -77,22 +84,41 @@ public class JobInfoListActivity extends BaseActivity{
         setContentView(R.layout.activity_job_info);
 
 
+        jobInfoList=(List<JobInfoListInfo>)getIntent().getSerializableExtra("JobInfoList");
+        queryUrl=getIntent().getStringExtra("queryUrl");
+
         initViews();
     }
 
     private void initViews() {
 
+        rowNum= (TextView) findViewById(R.id.tv_job_info_num);
+        if(jobInfoList!=null&&jobInfoList.size()>0) {
+            rowNum.setText("共有数据" + jobInfoList.get(0).getMax_row() + "条");
+        }else{
+            rowNum.setText("沒有数据");
+        }
         hsv = (PullToRefreshScrollView) findViewById(R.id.hsv_job_info);
         hsv.setMode(PullToRefreshBase.Mode.BOTH);
         hsv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-              //  refresh();
+                if(jobInfoList!=null&&jobInfoList.size()>0) {
+                    refresh();
+                }else{
+
+                    hsv.onRefreshComplete();
+
+                }
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-               // moreData();
+
+                if(jobInfoList!=null&&jobInfoList.size()>0) {
+                moreData();}else{
+                    hsv.onRefreshComplete();
+                }
             }
         });
 
@@ -102,88 +128,10 @@ public class JobInfoListActivity extends BaseActivity{
 
         lv.addHeaderView(headerLv);
 
-        getData();
-//
-//        for(int i=0;i<30;i++) {
-//
-//            jobInfoList.add(new JobInfoListInfo());
-//        }
-//
-//
-        commonAdapter = new CommonAdapter<JobInfoListInfo>(this, jobInfoList, R.layout.item_job_info_lv) {
-
-            @Override
-            public void convert(CommonViewHolder holder, JobInfoListInfo item, int position) {
-//
-//                TextView comnameTv = holder.getView(R.id.tv_item_job_info_comname);
-//                comnameTv.setText(item.getComname());
-//                TextView jobnameTv = holder.getView(R.id.tv_item_job_info_jobname);
-//                jobnameTv.setText(item.getJobname());
-//                TextView jobnoTv = holder.getView(R.id.tv_item_job_info_jobno);
-//                jobnoTv.setText(item.getJobno());
-//                TextView edunameTv = holder.getView(R.id.tv_item_job_info_eduname);
-//                edunameTv.setText(item.getEduname());
-//                TextView ageTv = holder.getView(R.id.tv_item_job_info_age);
-//                ageTv.setText(item.getStartage() + "-" + item.getEndage());
-//                TextView numsTv = holder.getView(R.id.tv_item_job_info_recruitnums);
-//                numsTv.setText(item.getRecruitnums() + " ");
-//                TextView salaryTv = holder.getView(R.id.tv_item_job_info_salary);
-//                salaryTv.setText(item.getStartsalary() + "-" + item.getEndsalary());
-//                TextView timeTv = holder.getView(R.id.tv_item_job_info_time);
-//                timeTv.setText(item.getModifydate());
-            }
-        };
-
-        lv.setAdapter(commonAdapter);
+        lvSetAdapter(jobInfoList);
 
     }
 
-
-    private void getData(){
-
-       // http://web.youli.pw:89/Json/GetJobs_Search.aspx?PageRecCnts=15&ZyflId=-1&Age=-1&GZXZId=-1&ZyflChildId=-1&JobName=&IsDisabledPerson=false&IsDirectInterview=false&ComPropertyId=-1&JobNo=&ModifyStartDate=2010-01-01&IsAssurance=false&EndSalary=0&IndustryClassChildId=-1&ComName=&GZBSId=-1&EduID=-1&AreaId3=-1&AreaId2=-1&AreaId1=-1&ModifyEndDate=2030-01-01&StartSalary=0&IndustryClassId=-1&IsNewGraduates=false&PageIndex=0
-
-        new Thread(
-
-                new Runnable() {
-                    @Override
-                    public void run() {
-
-                       String url= MyOkHttpUtils.BaseUrl+"/Json/GetJobs_Search.aspx?PageRecCnts=15&ZyflId=-1&Age=-1&GZXZId=-1&ZyflChildId=-1&JobName=&IsDisabledPerson=false&IsDirectInterview=false&ComPropertyId=-1&JobNo=&ModifyStartDate=2010-01-01&IsAssurance=false&EndSalary=0&IndustryClassChildId=-1&ComName=&GZBSId=-1&EduID=-1&AreaId3=-1&AreaId2=-1&AreaId1=-1&ModifyEndDate=2030-01-01&StartSalary=0&IndustryClassId=-1&IsNewGraduates=false&PageIndex=0";
-
-                        Response response=MyOkHttpUtils.okHttpGet(url);
-
-                        Message msg=Message.obtain();
-
-                        if(response!=null){
-
-                            try {
-                                String resStr=response.body().string();
-
-                                Gson gson=new Gson();
-
-                                msg.obj=gson.fromJson(resStr,new TypeToken<List<JobInfoListInfo>>(){}.getType());
-                                msg.what=SUCCEED;
-                                mHandler.sendMessage(msg);
-
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                        }else{
-
-                            msg.what=PROBLEM;
-                            mHandler.sendMessage(msg);
-
-                        }
-
-                    }
-                }
-
-        ).start();
-
-    }
 
     private void lvSetAdapter(List<JobInfoListInfo> list){
 if(commonAdapter==null){
@@ -204,43 +152,83 @@ if(commonAdapter==null){
             TextView numsTv = holder.getView(R.id.tv_item_job_info_recruitnums);
             numsTv.setText(item.getRecruitnums() + " ");
             TextView salaryTv = holder.getView(R.id.tv_item_job_info_salary);
-            salaryTv.setText(item.getStartsalary() + "-" + item.getEndsalary());
+            salaryTv.setText((int)item.getStartsalary() + "-" + (int)item.getEndsalary());
             TextView timeTv = holder.getView(R.id.tv_item_job_info_time);
-            timeTv.setText(item.getModifydate());
+            timeTv.setText(item.getModifydate().split("T")[0]);
+
+            LinearLayout ll = holder.getView(R.id.item_job_info_ll);
+            if (position % 2 == 0) {
+                ll.setBackgroundResource(R.drawable.selector_ziyuandiaocha_item1);
+            } else {
+                ll.setBackgroundResource(R.drawable.selector_ziyuandiaocha_item2);
+            }
         }
     };
     lv.setAdapter(commonAdapter);
 }else{
     commonAdapter.notifyDataSetChanged();
 }
-
+        hsv.onRefreshComplete();
     }
 
     //刷新
-//    private void refresh(){
-//
-//        jobInfoList.clear();
-//        for(int i=0;i<30;i++){
-//            jobInfoList.add(new JobInfoListInfo("上海联家超市有限公司大场店"+i,"生鲜部、蔬果部员工"+i,"158296291","高中/中专/技校",18,40,i,2000,2200,"2017-02-14"));
-//
-//        }
-//        commonAdapter.notifyDataSetChanged();
-//        hsv.onRefreshComplete();
-//}
+    private void refresh(){
+
+        PageIndex=0;
+        refreshOrMoreData(queryUrl,PageIndex);
+
+}
 
     //更多
-//    private void moreData(){
-//
-//        for(int i=0;i<30;i++){
-//
-//            jobInfoList.add(new JobInfoListInfo("更多数据"+i,"生鲜部、蔬果部员工"+i,"158296291","高中/中专/技校",18,40,i,2000,2200,"2017-02-14"));
-//
-//        }
-//        commonAdapter.notifyDataSetChanged();
-//
-//        hsv.onRefreshComplete();
-//
-//
-//    }
+    private void moreData(){
+
+
+        PageIndex++;
+        refreshOrMoreData(queryUrl,PageIndex);
+    }
+
+    private void refreshOrMoreData(final String queryUrl, final int pageIndex){
+
+                new Thread(
+
+                new Runnable() {
+                    @Override
+                    public void run() {
+
+                        String url=queryUrl+pageIndex;
+
+                        Response response=MyOkHttpUtils.okHttpGet(url);
+
+                        Message msg=Message.obtain();
+
+                        if(response!=null){
+
+                            try {
+                                String resStr=response.body().string();
+
+                                Gson gson=new Gson();
+
+                                msg.obj=gson.fromJson(resStr,new TypeToken<List<JobInfoListInfo>>(){}.getType());
+                                msg.what=SUCCEED_REFRESH;
+                                mHandler.sendMessage(msg);
+
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        }else{
+
+                            msg.what=PROBLEM;
+                            mHandler.sendMessage(msg);
+
+                        }
+
+                    }
+                }
+
+        ).start();
+
+    }
 
 }

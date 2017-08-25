@@ -1,5 +1,7 @@
 package com.youli.zbetuch.jingan.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by liutao on 2017/8/23.
  */
@@ -10,7 +12,7 @@ package com.youli.zbetuch.jingan.entity;
 // "jobno":"158296291","jobname":"生鲜部、蔬果部员工","eduname":"高中/中专/技校","startage":18,"endage":40,
 // "recruitnums":2,"startsalary":2000.00,"endsalary":2200.00,"modifydate":"2017-02-14T00:00:00"}]
 
-public class JobInfoListInfo {
+public class JobInfoListInfo implements Serializable{
 
     private int max_row;
     private String comname;//单位名称
