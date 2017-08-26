@@ -54,6 +54,7 @@
             ></activity>
 
         <activity android:name=".activity.JobInfoListActivity"
+            android:windowSoftInputMode="stateHidden"
             ></activity>
 
     </application>

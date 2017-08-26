@@ -8,6 +8,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -281,6 +282,10 @@ public class RecruitInfoActivity extends BaseActivity implements View.OnClickLis
 //                Toast.makeText(mContext,"收入下限=="+incomeEndStr,Toast.LENGTH_SHORT).show();
 //                Toast.makeText(mContext,"年龄=="+ageStr,Toast.LENGTH_SHORT).show();
 
+                //使软键盘隐藏
+                //小米手机的bug，如果不隐藏键盘的话，会改变下一个界面的样子
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
                getJobListData();
 
 
