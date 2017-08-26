@@ -389,7 +389,7 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
     private void showModifyDialog(){
 
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
-
+        final Intent[] intent = {new Intent()};
         builder.setTitle("修改信息提示");
         builder.setMessage("您确定修改此人的信息吗？");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -398,20 +398,24 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
 
                 switch (mRadioGroup.getCheckedRadioButtonId()){
 
-                    case R.id.rb_person_info:
-                        Toast.makeText(PersonInfoActivity.this,"基本信息",Toast.LENGTH_SHORT).show();
+                    case R.id.rb_person_info://基本信息
+                        intent[0].setClass(mContext,PersonBaseInfoActivity.class);
+                        startActivity(intent[0]);
                         break;
                     case R.id.rb_family_info:
                         Toast.makeText(PersonInfoActivity.this,"家庭信息",Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.rb_person_resume:
-                        Toast.makeText(PersonInfoActivity.this,"个人简历",Toast.LENGTH_SHORT).show();
+                    case R.id.rb_person_resume://个人简历
+                        intent[0].setClass(mContext,PersonReActivity.class);
+                        startActivity(intent[0]);
                         break;
                     case R.id.rb_service_record:
                         Toast.makeText(PersonInfoActivity.this,"服务记录",Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.rb_edu_info:
-                        Toast.makeText(PersonInfoActivity.this,"教育信息",Toast.LENGTH_SHORT).show();
+                    case R.id.rb_edu_info://教育信息
+                        intent[0].setClass(mContext,PersonEduActivity.class);
+                        startActivity(intent[0]);
+
                         break;
 
                 }

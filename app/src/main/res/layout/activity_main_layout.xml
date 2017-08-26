@@ -109,11 +109,11 @@
                 />
 
             <TextView
+                android:id="@+id/main_layout_email_tv"
                 android:layout_margin="5dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="2381447237@qq.com"
                 />
 
         </LinearLayout>
@@ -138,11 +138,11 @@
                 />
 
             <TextView
+                android:id="@+id/main_layout_phone_tv"
                 android:layout_margin="5dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="13120601125"
                 />
 
         </LinearLayout>

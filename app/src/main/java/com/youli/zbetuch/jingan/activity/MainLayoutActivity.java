@@ -46,7 +46,7 @@ public class MainLayoutActivity extends BaseActivity implements View.OnClickList
     private List<JobsInfo> childData3=new ArrayList<>();
     private List<NewsInfo> childData4=new ArrayList<>();
 
-    private TextView nameTv;
+    private TextView nameTv,emailTv,phoneTv;
     private ImageView picIv;
     private Button workBtn;
 
@@ -72,6 +72,8 @@ public class MainLayoutActivity extends BaseActivity implements View.OnClickList
                 case SUCCEED_NAME:
 
                     nameTv.setText(((GetStaffInfo)msg.obj).getNAME());
+                    emailTv.setText(((GetStaffInfo)msg.obj).getEMAIL());
+                    phoneTv.setText(((GetStaffInfo)msg.obj).getPHONE());
                     adminName=nameTv.getText().toString().trim();
                     adminId=((GetStaffInfo)msg.obj).getID();
                     break;
@@ -169,6 +171,8 @@ public class MainLayoutActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.activity_main_layout);
 
         nameTv= (TextView) findViewById(R.id.main_layout_name_tv);
+        emailTv= (TextView) findViewById(R.id.main_layout_email_tv);
+        phoneTv= (TextView) findViewById(R.id.main_layout_phone_tv);
         picIv= (ImageView) findViewById(R.id.main_layout_head_iv);
         gv= (GridView) findViewById(R.id.main_layout_gv);
         workBtn= (Button) findViewById(R.id.main_layout_work_btn);
@@ -179,7 +183,7 @@ public class MainLayoutActivity extends BaseActivity implements View.OnClickList
 
     private void initData(){
 
-        getStaffName();//登录人员的名称
+        getStaffName();//登录人员的名称，电话，电子邮箱
 
         getStaffPic();//登录人员的头像
 

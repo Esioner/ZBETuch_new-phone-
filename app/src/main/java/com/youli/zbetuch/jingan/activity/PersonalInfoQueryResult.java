@@ -54,8 +54,9 @@ public class PersonalInfoQueryResult extends BaseActivity {
 
         Intent intent = getIntent();
         url_suffix = intent.getStringExtra("queryUrl");
+        Log.e("2017/8/26", "onCreate: " + url_suffix);
         String url = jointUrl(index);
-        Log.e("URL", "onCreate: " + url);
+
         loadDates(url);
     }
 

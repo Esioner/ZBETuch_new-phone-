@@ -54,9 +54,18 @@
             ></activity>
 
         <activity android:name=".activity.JobInfoListActivity"
+            ></activity>
+        <activity android:name=".activity.JobInfoDetailActivity"
+            ></activity>
+        <activity android:name=".activity.PersonBaseInfoActivity"
             android:windowSoftInputMode="stateHidden"
             ></activity>
-
+        <activity android:name=".activity.PersonReActivity"
+            android:windowSoftInputMode="stateHidden"
+            ></activity>
+        <activity android:name=".activity.PersonEduActivity"
+            android:windowSoftInputMode="stateHidden"
+            ></activity>
     </application>
 
 </manifest>

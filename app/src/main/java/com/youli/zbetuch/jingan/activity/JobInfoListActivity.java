@@ -1,12 +1,14 @@
 package com.youli.zbetuch.jingan.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -32,7 +34,7 @@ import okhttp3.Response;
  * Created by liutao on 2017/8/23.
  */
 
-public class JobInfoListActivity extends BaseActivity{
+public class JobInfoListActivity extends BaseActivity implements AdapterView.OnItemClickListener{
 
     private Context mContext=this;
     private final int SUCCEED_REFRESH=10000;
@@ -127,7 +129,7 @@ public class JobInfoListActivity extends BaseActivity{
         headerLv= LayoutInflater.from(this).inflate(R.layout.header_job_info_lv,lv,false);
 
         lv.addHeaderView(headerLv);
-
+         lv.setOnItemClickListener(this);
         lvSetAdapter(jobInfoList);
 
     }
@@ -231,4 +233,11 @@ if(commonAdapter==null){
 
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        Intent intent=new Intent(this,JobInfoDetailActivity.class);
+        startActivity(intent);
+
+    }
 }

@@ -181,6 +181,7 @@ public class PersonalInfoQuery extends BaseActivity implements View.OnClickListe
                                 TypeToken<List<StreetInfo>>() {}.getType());
                         List<StreetInfo> finalStreetList = streetList;
                         streetNameList.clear();
+                        streetNameList.add("请选择");
                         for (StreetInfo street : finalStreetList) {
                             streetNameList.add(street.getStreetName());
                         }
@@ -217,6 +218,7 @@ public class PersonalInfoQuery extends BaseActivity implements View.OnClickListe
                             committeeInfoList = new Gson().fromJson(committeeBody, new
                                     TypeToken<List<CommitteeInfo>>() {}.getType());
                             committeeNameList.clear();
+                            committeeNameList.add("请选择");
                             for (CommitteeInfo committeeInfo : committeeInfoList) {
                                 committeeNameList.add(committeeInfo.getCommitteeName());
                             }
@@ -258,7 +260,7 @@ public class PersonalInfoQuery extends BaseActivity implements View.OnClickListe
                         .simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
                 if (spinner.getAdapter().getCount() > 1) {
-                    spinner.setSelection(1);
+                    spinner.setSelection(0);
                 }
             }
         });
