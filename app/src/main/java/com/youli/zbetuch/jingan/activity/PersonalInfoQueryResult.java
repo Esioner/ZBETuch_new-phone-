@@ -43,6 +43,7 @@ public class PersonalInfoQueryResult extends BaseActivity {
     private PersonalInfoListAdapter personalInfoListAdapter;
     private boolean isFirst = true;
     int i = 0;
+    private TextView numTv;
     List<PersonalInfoBean> infoList = new ArrayList<PersonalInfoBean>();
 
     @Override
@@ -55,6 +56,7 @@ public class PersonalInfoQueryResult extends BaseActivity {
         Intent intent = getIntent();
         url_suffix = intent.getStringExtra("queryUrl");
         Log.e("2017/8/26", "onCreate: " + url_suffix);
+
         String url = jointUrl(index);
 
         loadDates(url);
@@ -77,12 +79,13 @@ public class PersonalInfoQueryResult extends BaseActivity {
         endLabels.setRefreshingLabel("正在加载...");// 刷新时
         endLabels.setReleaseLabel("释放以加载更多...");// 下来达到一定距离时，显示的提示
 
-
+        numTv= (TextView) findViewById(R.id.ziyuan_detail_num_tv);
         lv_personalInfo.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 String refreshUrl = MyOkHttpUtils.BaseUrl + "/Json/Get_BASIC_INFORMATION" +
                         ".aspx?page=0&rows=30" + url_suffix;
+
                 personalInfoList.clear();
 
                 loadDates(refreshUrl);
@@ -140,12 +143,16 @@ public class PersonalInfoQueryResult extends BaseActivity {
     private void initData() {
         if (personalInfoList != null) {
             personalInfoListAdapter = new PersonalInfoListAdapter(personalInfoList);
+
+
         } else {
             Toast.makeText(mContext, "数据异常", Toast.LENGTH_SHORT).show();
+            numTv.setText("没有数据");
         }
 
         if (personalInfoListAdapter != null && isFirst) {
             lv_personalInfo.setAdapter(personalInfoListAdapter);
+            numTv.setText("共有"+personalInfoList.get(0).getRecordCount()+"人");
             isFirst = false;
         }
 
