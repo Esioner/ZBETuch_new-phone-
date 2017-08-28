@@ -237,6 +237,7 @@ if(commonAdapter==null){
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         Intent intent=new Intent(this,JobInfoDetailActivity.class);
+        intent.putExtra("JOBNO",jobInfoList.get(position-1).getJobno());
         startActivity(intent);
 
     }

@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 import com.youli.zbetuch.jingan.R;
 import com.youli.zbetuch.jingan.entity.AreaInfo;
 import com.youli.zbetuch.jingan.entity.CompanyPropertyInfo;
+import com.youli.zbetuch.jingan.entity.EduInfo;
 import com.youli.zbetuch.jingan.entity.GzbsInfo;
 import com.youli.zbetuch.jingan.entity.GzxzInfo;
 import com.youli.zbetuch.jingan.entity.IndustryInfo;
@@ -69,6 +70,15 @@ public class RecruitInfoActivity extends BaseActivity implements View.OnClickLis
     private boolean IsNewGraduates;//应届生
     private boolean IsDisabledPerson;//残疾人
     private boolean IsAssurance;//协保人员
+    private int comPropertyId;//单位性质对应的id
+    private int eduId;//文化程度对应的id
+    private int industryClassId;//行业大类对应的id
+    private int industryClassChildId;//行业小类对应的id
+    private int zyflId;//职业大类对应的id
+    private int zyflChildId;//职业小类对应的id
+    private int gzxzId;//工作性质对应的id
+    private int gzbsId;//工作班时对应的id
+    private int areaIdOne,areaIdTwo,areaIdThree;//工作地区对应的id
     private Button queryBtn;
 
     private Spinner eduSp,companySp,commonSp,industryBigSp,industrySmallSp,occBigSp,occSmallSp,workSp,classSp,
@@ -504,7 +514,7 @@ public class RecruitInfoActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void run() {
 
-                        queryUrl=MyOkHttpUtils.BaseUrl+"/Json/GetJobs_Search.aspx?PageRecCnts=15&ZyflId=-1&Age="+ageStr+"&GZXZId=-1&ZyflChildId=-1&JobName="+jobNameStr+"&IsDisabledPerson="+IsDisabledPerson+"&IsDirectInterview="+IsDirectInterview+"&ComPropertyId=-1&JobNo="+jobNoStr+"&ModifyStartDate="+ModifyStartDateStr+"&IsAssurance="+IsAssurance+"&EndSalary="+incomeEndStr+"&IndustryClassChildId=-1&ComName="+comNameStr+"&GZBSId=-1&EduID=-1&AreaId3=-1&AreaId2=-1&AreaId1=-1&ModifyEndDate="+ModifyEndDateStr+"&StartSalary="+incomeStartStr+"&IndustryClassId=-1&IsNewGraduates="+IsNewGraduates+"&PageIndex=";
+                        queryUrl=MyOkHttpUtils.BaseUrl+"/Json/GetJobs_Search.aspx?PageRecCnts=15&ZyflId="+zyflId+"&Age="+ageStr+"&GZXZId="+gzxzId+"&ZyflChildId="+zyflChildId+"&JobName="+jobNameStr+"&IsDisabledPerson="+IsDisabledPerson+"&IsDirectInterview="+IsDirectInterview+"&ComPropertyId="+comPropertyId+"&JobNo="+jobNoStr+"&ModifyStartDate="+ModifyStartDateStr+"&IsAssurance="+IsAssurance+"&EndSalary="+incomeEndStr+"&IndustryClassChildId="+ industryClassChildId+"&ComName="+comNameStr+"&GZBSId="+gzbsId+"&EduID="+eduId+"&AreaId3="+areaIdThree+"&AreaId2="+areaIdTwo+"&AreaId1="+areaIdOne+"&ModifyEndDate="+ModifyEndDateStr+"&StartSalary="+incomeStartStr+"&IndustryClassId="+industryClassId+"&IsNewGraduates="+IsNewGraduates+"&PageIndex=";
 
                        String url= queryUrl+PageIndex;
 
@@ -651,10 +661,37 @@ public class RecruitInfoActivity extends BaseActivity implements View.OnClickLis
 
         switch (parent.getId()){
 
+            case R.id.sp_recruit_info_company_nature://单位性质
+
+                comPropertyId=((CompanyPropertyInfo)companySp.getSelectedItem()).getCompropertyid();
+
+                break;
+
+            case R.id.sp_recruit_info_common_work://常见工种
+
+                jobNameStr=(String)commonSp.getSelectedItem();
+                if(!TextUtils.equals("请选择",jobNameStr)) {
+                    jobNameEt.setText(jobNameStr);
+                }
+
+                break;
+
+            case R.id.sp_recruit_info_edu://文化程度
+
+                eduId=((RecruitEduInfo)eduSp.getSelectedItem()).getId();
+
+                break;
+
             case R.id.sp_recruit_info_industry_big://行业大类
 
                 String code=((IndustryInfo)industryBigSp.getSelectedItem()).getCode();
 
+                industryClassId=((IndustryInfo)industryBigSp.getSelectedItem()).getId();
+
+                if(TextUtils.equals("请选择",((IndustryInfo)industryBigSp.getSelectedItem()).getName())){
+
+                    industryClassChildId=-1;
+                }
                 if(code!=null){
 
                     industryCode=code;
@@ -665,17 +702,64 @@ public class RecruitInfoActivity extends BaseActivity implements View.OnClickLis
 
                 break;
 
+            case R.id.sp_recruit_info_industry_small://行业小类
+
+                industryClassChildId=((IndustryInfo)industrySmallSp.getSelectedItem()).getId();
+                if(TextUtils.equals("请选择",((IndustryInfo)industryBigSp.getSelectedItem()).getName())){
+
+                    industryClassChildId=-1;
+                }
+                break;
+
             case R.id.sp_recruit_info_occupation_big://职业大类
 
                 String pid=((OccInfo)occBigSp.getSelectedItem()).getCode();
+
+                zyflId=((OccInfo)occBigSp.getSelectedItem()).getId();
+
+                if(TextUtils.equals("请选择",((OccInfo)occBigSp.getSelectedItem()).getName())){
+
+                    zyflChildId=-1;
+                }
 
                 if(pid!=null){
 
                     occPid=pid;
 
-
+                    getSpinnerInfo("职业小类");
                 }
 
+                break;
+
+            case R.id.sp_recruit_info_occupation_small://职业小类
+
+                zyflChildId=((OccInfo)occSmallSp.getSelectedItem()).getId();
+                if(TextUtils.equals("请选择",((OccInfo)occSmallSp.getSelectedItem()).getName())){
+
+                    zyflChildId=-1;
+                }
+                break;
+
+            case R.id.sp_recruit_info_work_nature://工作性质
+
+                gzxzId=((GzxzInfo)workSp.getSelectedItem()).getId();
+
+                break;
+
+            case R.id.sp_recruit_info_work_class://工作班时
+
+                gzbsId=((GzbsInfo)classSp.getSelectedItem()).getId();
+
+                break;
+
+            case R.id.sp_recruit_info_work_area_one://工作地区1
+                areaIdOne=((AreaInfo)areaOneSp.getSelectedItem()).getAreaid();
+                break;
+            case R.id.sp_recruit_info_work_area_two://工作地区2
+                areaIdTwo=((AreaInfo)areaTwoSp.getSelectedItem()).getAreaid();
+                break;
+            case R.id.sp_recruit_info_work_area_three://工作地区3
+                areaIdThree=((AreaInfo)areaThreeSp.getSelectedItem()).getAreaid();
                 break;
 
         }
